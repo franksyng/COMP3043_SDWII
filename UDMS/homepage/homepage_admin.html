@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./bootstrap-4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap-4.3.1/dist/css/bootstrap.min.css">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="./css/homepage.css">
-    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/stickyFooter.css">
     <title>Welcome - UDMS</title>
 </head>
 <body>
 
-<!-- Navbar Ordinary User -->
+<!-- Navbar Admin -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-        <img class="navbar-icon mx-auto" src="./img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
+    <a class="navbar-brand" href="./homepage_admin.html">
+        <img class="navbar-icon mx-auto" src="../img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,13 +26,20 @@
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="./homepage_admin.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Assignment</a>
+                <a class="nav-link" href="../search/search_admin.html">Search Data</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Search Data</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Management
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    <a class="dropdown-item" href="../attendence/attendence.html">Attendance</a>
+                    <a class="dropdown-item" href="#">Match System</a>
+                    <a class="dropdown-item" href="../grading/grading.html">Grading</a>
+                </div>
             </li>
         </ul>
     </div>
@@ -202,12 +210,27 @@
     </div>
 </div>
 
+<!-- Footer -->
+<footer class="footer bg-dark py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <img src="../img/logo/logo_white_notitle.svg" width="80px"><br/><br/>
+                <p class="text-white">The BNU-HKBU UIC Debate Team, established by The Chinese Youth League of UIC in 2019, is a official
+                    debate team that will represent BNU-HKBU UIC to attend different sorts of regional and international
+                    debate competitions.</p>
+                <small class="d-block mb-3 text-muted">&copy; 2019 CST Year 2 SDWII Group Project</small>
+            </div>
+        </div>
+    </div>
+</footer>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="./bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
+<script src="../bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="./bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
-<script src="./js/Chart.js"></script>
-<script src="./js/Chart.min.js"></script>
+<script src="../bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+<script src="../js/Chart.js"></script>
+<script src="../js/Chart.min.js"></script>
 </body>
 </html>
