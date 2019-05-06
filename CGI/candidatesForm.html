@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Candidates Form</title>
+    </head>
+
+    <body>
+        <h1>Please fill in the form below to submit</h1>
+        <form action="http://127.0.0.1/cgi-bin/displayCandidatesSelection.py" method="POST">
+            <table>
+                <tr>
+                    <td>
+                        Username: <input type="text" name="uname"/><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <fieldset>
+                            <legend>Current Skills:</legend>
+                            <input type="checkbox" name="wd" value="Web Design"/> Web Design<br/>
+                            <input type="checkbox" name="java" value="Java"/> Java<br/>
+                            <input type="checkbox" name="db" value="Database"/> Database<br/>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset>
+                            <legend>Cities Expected:</legend>
+                            <input type="radio" name="city" value="Beijing"/> Beijing<br/>
+                            <input type="radio" name="city" value="Shenzhen"/> Shenzhen<br/>
+                            <input type="radio" name="city" value="Zhuhai"/> Zhuhai<br/>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Working Experience: <br/>
+                        <textarea name="workexp" rows="10" cols="30"></textarea>
+                    </td>
+                    <td>
+                        Recent Jobs:<br/>
+                        <select name="jobs" multiple="multiple">
+                            <option value="Assitant">Assitant</option>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="Customer Service">Customer Service</option>
+                            <option value="Manager">Manager</option>
+                            <option value="CEO">CEO</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Position:<br/>
+                        <select name="position">
+                            <option value="Officer">Officer</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Architect">Architect</option>
+                        </select>
+                    </td>
+                    <td>
+                        Upload a File: <input type="file" name="uploadFile" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit">
+                        <input type="reset">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
