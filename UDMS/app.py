@@ -20,7 +20,7 @@ class FileContents(db.Model):
 
 @app.route('/')
 def assignment_detail():
-    return render_template('./match/match_del.html')
+    return render_template('./assignment/assignment_detail.html')
 
 
 @app.route('/record')
@@ -49,10 +49,10 @@ def grading_detail():
     return render_template('./grading/grading_detail.html')
 
 
-@app.route('/download')
-def download():
-    file_data = FileContents.query.filter_by(file_id=1)
-    return send_file(BytesIO(file_data.data), attachment_filename= file_name, as_attachment=True)
+@app.route('/download/<int:fid>')
+def download(fid):
+    file_info = FileContents.query.filter_by(file_id=fid).first()
+    return send_file(BytesIO(file_info.data), attachment_filename=file_info.name, as_attachment=True)
 
 
 if __name__ == '__main__':
