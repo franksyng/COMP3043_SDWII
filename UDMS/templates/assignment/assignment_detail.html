@@ -80,11 +80,11 @@
             </table>
         </div>
     </div>
-    <form class="was-validated">
+    <form method="POST" action="/upload" enctype="multipart/form-data" class="was-validated">
     <div class="row">
         <div class="col">
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                <input type="file" name="inputFile" class="custom-file-input" id="validatedCustomFile" required>
                 <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                 <div class="invalid-feedback">No file has been chosen</div>
             </div>
