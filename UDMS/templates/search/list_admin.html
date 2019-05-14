@@ -17,7 +17,7 @@
 
 <!-- Navbar Admin -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../homepage/homepage_admin.html">
+    <a class="navbar-brand" href="/homepage_a">
         <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,20 +25,20 @@
     </button>
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="../homepage/homepage_admin.html">Home</a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="../search/search_admin.html">Search Data</a>
+                <a class="nav-link" href="/homepage_a">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/search">Search Data</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Management
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                    <a class="dropdown-item" href="../attendence/attendence.html">Attendance</a>
+                    <a class="dropdown-item" href="../attendence">Attendance</a>
                     <a class="dropdown-item" href="#">Match System</a>
-                    <a class="dropdown-item" href="../grading/grading.html">Grading</a>
+                    <a class="dropdown-item" href="../grading">Grading</a>
                 </div>
             </li>
         </ul>
@@ -46,7 +46,7 @@
 </nav>
 
 <div class="container">
-        <h1>xxx result(s) has been found</h1>
+        <h1>{{ number }} result(s) has been found</h1>
         <table class="table">
                 <thead>
                   <tr>
@@ -58,12 +58,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>lose hair</td>
-                    <td><a href="#" >more information</a></td>
+                 {% for i in results %}
+              <tr>
+                <th scope="row">{{ i[0] }}</th>
+                <td>{{ i[1] }}</td>
+                <td>{{ i[2] }}</td>
+                <td>{{ i[3] }}</td>
+                <td><a href="/information/{{ i[0] }}" >more information</a></td>
+                {% endfor %}
                 </tbody>
               </table>
               <td><a href="#" >back to search</a></td>

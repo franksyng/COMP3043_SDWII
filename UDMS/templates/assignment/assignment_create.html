@@ -16,7 +16,7 @@
 
 <!-- Navbar Admin -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../homepage/homepage_admin.html">
+    <a class="navbar-brand" href="/homepage_a">
         <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,20 +24,20 @@
     </button>
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="../homepage/homepage_admin.html">Home</a>
+            <li class="nav-item active">
+                <a class="nav-link" href="/homepage_a">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../search/search_admin.html">Search Data</a>
+               <a class="nav-link" href="/search_a">Search Data</a>
             </li>
-            <li class="nav-item dropdown active">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Management
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                    <a class="dropdown-item" href="../attendence/attendence.html">Attendance</a>
+                    <a class="dropdown-item" href="/attendance">Attendance</a>
                     <a class="dropdown-item" href="#">Match System</a>
-                    <a class="dropdown-item" href="../grading/grading.html">Grading</a>
+                    <a class="dropdown-item" href="/grading">Grading</a>
                 </div>
             </li>
         </ul>
@@ -55,36 +55,36 @@
             <!-- Assignment subnavbar-->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../grading/grading.html">Assignment list</a></li>
+                    <li class="breadcrumb-item"><a href="/grading">Assignment list</a></li>
                     <li class="breadcrumb-item active" aria-current="page">New assignment</li>
                 </ol>
             </nav>
         </div>
     </div>
-    <form class="was-validated">
+    <form class="was-validated" method = "post">
         <div class="row">
             <div class="col-6">
                 <label for="assName">Assignment name</label>
-                <input class="form-control is-invalid" id="assName" type="text" required>
+                <input class="form-control is-invalid" name= "assName "id="assName" type="text" required>
                 <div class="invalid-feedback">Please input assignment name</div>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
                 <label for="assReq">Requirement</label>
-                <textarea class="form-control is-invalid" id="assReq" rows="10px" required></textarea>
+                <textarea class="form-control is-invalid" id="assReq" id = "assReq" rows="10px" required></textarea>
                 <div class="invalid-feedback">Please input assignment requirement</div>
             </div>
         </div>
         <div class="row">
             <div class="col-3">
                 <label for="assDueDate">Due time</label>
-                <input class="form-control is-invalid" id="assDueDate" type="date" required>
+                <input class="form-control is-invalid" name="assDueDate" id="assDueDate" type="date" required>
                 <div class="invalid-feedback">Please select due date</div>
             </div>
             <div class="col-3">
                 <label for="assDueTime">Due time</label>
-                <input class="form-control is-invalid" id="assDueTime" type="time" required>
+                <input class="form-control is-invalid" name="assDueTime" id="assDueTime" type="time" required>
                 <div class="invalid-feedback">Please select due time</div>
             </div>
         </div>

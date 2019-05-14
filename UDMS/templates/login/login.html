@@ -13,19 +13,19 @@
     <title>UDMS Login</title>
 </head>
 <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" method = "post">
         <img class="" src="static/img/logo/logo_black.svg" alt height="150">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="iptUDTAccount" class="sr-only">UDT Account Number</label>
-        <input type="text" id="iptUDTAccount" class="form-control" placeholder="UDT Account Number" required autofocus>
+        <input type="text" id="iptUDTAccount" class="form-control" placeholder="UDT Account Number" name="username" required autofocus>
         <label for="iptPwd" class="sr-only">Password</label>
-        <input type="password" id="iptPwd" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2019</p>
+        <input type="password" name="password" id="iptPwd" class="form-control" placeholder="Password" required>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value=" Sign in"></input>
+        <p class="mt-5 mb-3 text-muted">{{ message }}</p>
     </form>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script></script>
 <script src="static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>

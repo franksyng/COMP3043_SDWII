@@ -17,7 +17,7 @@
 
 <!-- Navbar Ordinary User -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../homepage/homepage.html">
+    <a class="navbar-brand" href="homepage">
         <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,39 +26,39 @@
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="../homepage/homepage.html">Home</a>
+                <a class="nav-link" href="/homepage.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../assignment/assignment.html">Assignment</a>
+                <a class="nav-link" href="/assignment">Assignment</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="./search.html">Search Data</a>
+                <a class="nav-link" href="/search">Search Data</a>
             </li>
         </ul>
     </div>
 </nav>
-
+<form method = post>
 <div class="container">
     <div class="row text-center">
         <div class="col">
             <form class="searchForm">
-                <img src="../img/logo/logo_black.svg" width="200">
+                <img src="static/img/logo/logo_black.svg" width="200">
             </form>
         </div>
     </div>
     <div class="row">
         <div class="col-4">
             <div class="form-group mb-3">
-                <select class="form-control" id="searchPara1">
-                    <option>UDT ID</option>
-                    <option>Name</option>
-                    <option>Programme</option>
+                <select class="form-control" name = "select" id="searchPara1">
+                    <option value = "id">UDT ID</option>
+                    <option value = "name">Name</option>
+                    <option value = "major">Programme</option>
                 </select>
             </div>
         </div>
         <div class="col-8">
             <div class="form-group">
-                <input type="text" class="form-control" id="searchIpt1" placeholder="Input according to the first parameter">
+                <input type="text" name = "input" class="form-control" id="searchIpt1" placeholder="Input according to the first parameter">
             </div>
         </div>
     </div>
@@ -67,7 +67,9 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
         </div>
     </div>
-</div>
+
+</div></form>
+
 
 <!-- Footer -->
 <footer class="footer bg-dark py-3">
