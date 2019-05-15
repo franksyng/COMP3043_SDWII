@@ -46,12 +46,24 @@
             <h1 class="h1 mb-3 font-weight-bold">Hi {{ name }}, welcome to UDMS!</h1>
         </div>
     </div>
+    <!-- Homepage subnavbar-->
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">My Info.</li>
+                    <li class="breadcrumb-item"><a href="/change_pwd">Modify Password</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <!-- Notice board -->
     <div class="row">
         <div class="col">
             <div class="card shadow">
                 <div class="card-body">
                     <h5 class="card-title">Notice Board</h5>
+                <hr/>
                     {% for i in events %}
                     <p class="card-text">{{i}} {{ events.index(i) }}</p>
                      {% endfor %}
@@ -136,7 +148,7 @@
                     <tbody>
                 {% for i in records %}
                     <tr>
-                        <th scope="row">{{  records.index(i)+1}}</th>
+                        <th scope="row">{{  records.index(i) + 1 }}</th>
                         <td>{{ i[0] }}</td>
                         <td>{{ i[1] }}</td>
                         <td>{{ i[2] }}</td>

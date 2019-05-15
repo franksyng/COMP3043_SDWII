@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app.py" line="161" />
+    <bookmark url="file://$PROJECT_DIR$/app.py" line="180" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f1eac02-d4de-448a-b0b7-707417ab06f9" name="Default Changelist" comment="" />
+    <list default="true" id="9f1eac02-d4de-448a-b0b7-707417ab06f9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/homepage/change_notice.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/homepage/change_pwd.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/homepage/change_pwd_admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Flask/.idea/Flask.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Flask/.idea/Flask.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Flask/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Flask/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Flask/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Flask/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Flask/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Flask/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/groupproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/groupproject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage/homepage_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage_admin.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +27,8 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/groupproject$groupproject.coverage" NAME="groupproject Coverage Results" MODIFIED="1557841675112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UDMS$UDMS.coverage" NAME="UDMS Coverage Results" MODIFIED="1557908456673" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UDMS$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1557919600748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -36,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4947">
-              <caret line="301" column="1" selection-start-line="301" selection-start-column="1" selection-end-line="301" selection-end-column="1" />
+            <state relative-caret-position="197">
+              <caret line="201" lean-forward="true" selection-start-line="201" selection-end-line="201" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -45,86 +61,56 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/attendance/attendance_new.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="130" selection-start-line="130" selection-end-line="130" />
+            <state relative-caret-position="447">
+              <caret line="119" column="14" lean-forward="true" selection-start-line="119" selection-start-column="14" selection-end-line="119" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/grading/grading_detail.html">
+        <entry file="file://$PROJECT_DIR$/templates/homepage/homepage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3740">
-              <caret line="220" column="23" selection-start-line="220" selection-start-column="16" selection-end-line="220" selection-end-column="23" />
+            <state relative-caret-position="149">
+              <caret line="54" column="68" selection-start-line="54" selection-start-column="68" selection-end-line="54" selection-end-column="68" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/grading/grading.html">
+        <entry file="file://$PROJECT_DIR$/templates/homepage/change_pwd_admin.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1241">
-              <caret line="73" column="43" selection-start-line="73" selection-start-column="43" selection-end-line="73" selection-end-column="43" />
+            <state relative-caret-position="166">
+              <caret line="58" column="30" lean-forward="true" selection-end-line="115" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/homepage/change_notice.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="217">
+              <caret line="81" column="9" lean-forward="true" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/assignment/assignment_detail.html">
+        <entry file="file://$PROJECT_DIR$/templates/homepage/homepage_admin.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1853">
-              <caret line="109" column="27" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
+            <state relative-caret-position="595">
+              <caret line="89" column="51" lean-forward="true" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/IO.py">
+        <entry file="file://$PROJECT_DIR$/templates/homepage/change_pwd.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#69#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/assignment/assignment_create.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1751">
-              <caret line="103" column="6" selection-start-line="103" selection-start-column="6" selection-end-line="103" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/assignment/assignment.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="918">
-              <caret line="54" column="54" selection-start-line="54" selection-start-column="54" selection-end-line="54" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1411">
-              <caret line="83" column="12" selection-start-line="83" selection-start-column="12" selection-end-line="83" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/attendance/attendance.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2261">
-              <caret line="133" column="7" selection-start-line="133" selection-start-column="7" selection-end-line="133" selection-end-column="7" />
+            <state relative-caret-position="255">
+              <caret line="80" column="9" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -135,8 +121,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -149,7 +135,6 @@
       <find>form</find>
       <find>%</find>
       <find>lat</find>
-      <find>homepage</find>
       <find>css</find>
       <find>redirect</find>
       <find>attendance_</find>
@@ -167,7 +152,13 @@
       <find>attendance</find>
       <find>static/</find>
       <find>/attendance</find>
+      <find>class</find>
+      <find>detial</find>
+      <find>homepage</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -186,12 +177,10 @@
         <option value="$PROJECT_DIR$/templates/attendance/attendance_search.html" />
         <option value="$PROJECT_DIR$/templates/attendance/attendance_del.html" />
         <option value="$PROJECT_DIR$/templates/assignment/assignment_create.html" />
-        <option value="$PROJECT_DIR$/templates/homepage/homepage_admin.html" />
         <option value="$PROJECT_DIR$/templates/warning/authority.html" />
         <option value="$PROJECT_DIR$/templates/search/search.html" />
         <option value="$PROJECT_DIR$/templates/search/information.html" />
         <option value="$PROJECT_DIR$/templates/search/information_admin.html" />
-        <option value="$PROJECT_DIR$/templates/homepage/homepage.html" />
         <option value="$PROJECT_DIR$/Attendance.py" />
         <option value="$PROJECT_DIR$/attendance.py" />
         <option value="$PROJECT_DIR$/templates/assignment/assignment.html" />
@@ -201,17 +190,22 @@
         <option value="$PROJECT_DIR$/templates/grading/grading_detail.html" />
         <option value="$PROJECT_DIR$/templates/attendance/attendance.html" />
         <option value="$PROJECT_DIR$/IO.py" />
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/templates/attendance/attendance_new.html" />
+        <option value="$PROJECT_DIR$/templates/homepage/homepage.html" />
+        <option value="$PROJECT_DIR$/templates/homepage/homepage_admin.html" />
+        <option value="$PROJECT_DIR$/templates/homepage/change_pwd.html" />
+        <option value="$PROJECT_DIR$/templates/homepage/change_pwd_admin.html" />
+        <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/templates/homepage/change_notice.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1048" />
+    <option name="x" value="900" />
+    <option name="width" value="933" />
+    <option name="height" value="1092" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -221,55 +215,31 @@
         <subPane>
           <expand>
             <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="assignment" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="attendance" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="grading" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="homepage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="search" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="groupproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="groupproject" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="warning" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -281,9 +251,10 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app.py" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -308,15 +279,15 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="groupproject" type="Python.FlaskServer" factoryName="Flask server">
+  <component name="RunManager" selected="Flask server.Flask (app.py)">
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" factoryName="Flask server" temporary="true" nameIsGenerated="true">
       <module name="groupproject" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -324,6 +295,26 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <configuration name="UDMS" type="Python.FlaskServer" factoryName="Flask server">
+      <module name="groupproject" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\Users\Frank Ng\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flask server.Flask (app.py)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -353,21 +344,33 @@
       <workItem from="1557833559019" duration="165000" />
       <workItem from="1557833770353" duration="6752000" />
       <workItem from="1557842017990" duration="16000" />
+      <workItem from="1557907490131" duration="1139000" />
+      <workItem from="1557908810365" duration="7861000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75508000" />
+    <option name="totallyTimeSpent" value="84508000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1861" height="1096" extended-state="6" />
+    <frame x="-7" y="-7" width="1230" height="735" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4993007" visible="true" weight="0.16102165" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993007" visible="true" weight="0.16666667" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5006993" side_tool="true" weight="0.34695652" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.530541" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25318247" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.530541" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22222222" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39886847" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -381,7 +384,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.15935591" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.15897436" />
       <window_info anchor="right" id="Database" order="4" weight="0.32995737" />
     </layout>
   </component>
@@ -475,13 +478,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/homepage/homepage_admin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3534">
-          <caret line="186" column="6" selection-start-line="186" selection-start-column="6" selection-end-line="186" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/search/list_admin.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -500,13 +496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="893">
           <caret line="47" column="10" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/homepage/homepage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -533,16 +522,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../runanswer/app.py" />
     <entry file="file://$PROJECT_DIR$/attendance.py" />
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4947">
-          <caret line="301" column="1" selection-start-line="301" selection-start-column="1" selection-end-line="301" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/grading/grading_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3740">
@@ -557,13 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/assignment/assignment_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="109" column="27" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/IO.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -574,13 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/assignment/assignment_create.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1751">
-          <caret line="103" column="6" selection-start-line="103" selection-start-column="6" selection-end-line="103" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/assignment/assignment.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
@@ -588,24 +553,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/assignment/assignment_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1955">
+          <caret line="115" column="44" selection-start-line="115" selection-start-column="44" selection-end-line="115" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/block.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="248" column="16" selection-start-line="248" selection-start-column="16" selection-end-line="248" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
+        <state relative-caret-position="322">
           <caret line="83" column="12" selection-start-line="83" selection-start-column="12" selection-end-line="83" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage/homepage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="54" column="68" selection-start-line="54" selection-start-column="68" selection-end-line="54" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage/change_pwd.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="80" column="9" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/assignment/assignment_create.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="52" selection-start-line="52" selection-end-line="62" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/attendance/attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2261">
+        <state relative-caret-position="1683">
           <caret line="133" column="7" selection-start-line="133" selection-start-column="7" selection-end-line="133" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/attendance/attendance_new.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
+        <state relative-caret-position="447">
+          <caret line="119" column="14" lean-forward="true" selection-start-line="119" selection-start-column="14" selection-end-line="119" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage/homepage_admin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="89" column="51" lean-forward="true" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage/change_pwd_admin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="58" column="30" lean-forward="true" selection-end-line="115" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="201" lean-forward="true" selection-start-line="201" selection-end-line="201" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage/change_notice.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="81" column="9" lean-forward="true" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
         </state>
       </provider>
     </entry>

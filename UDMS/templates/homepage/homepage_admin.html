@@ -41,6 +41,9 @@
                     <a class="dropdown-item" href="/grading">Grading</a>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -53,16 +56,38 @@
             <h1 class="h1 mb-3 font-weight-bold">Hi {{name}}, welcome to UDMS!</h1>
         </div>
     </div>
+    <!-- Homepage subnavbar-->
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">My Info.</li>
+                    <li class="breadcrumb-item"><a href="#">Modify Notice Board</a></li>
+                    <li class="breadcrumb-item"><a href="/change_pwd_admin">Modify Password</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <!-- Notice board -->
     <div class="row">
         <div class="col">
             <div class="card shadow">
                 <div class="card-body">
-                    <h5 class="card-title">Notice Board</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="h5 card-title">Notice Board</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="#" class="btn btn-sm btn-outline-dark justify-content-end">Customise</a>
+                        </div>
+                    </div>
+                    <hr/>
                     {% for i in events %}
-                    <p class="card-text">{{i}}</p>
-                     {% endfor %}
-{#                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>#}
+                        <p class="card-text">{{i}}</p>
+                    {% endfor %}
+                    {#                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>#}
                 </div>
             </div>
         </div>
@@ -124,7 +149,8 @@
         </div>
     </div>
     <!-- Detail Info. -->
-  <div class="col-12">
+    <div class="row">
+        <div class="col-12">
             <div class="card mb-3 shadow" style="max-width: 100rem;">
                 <div class="card-header text-white bg-secondary">Match Records</div>
                 <table class="table table-striped">
@@ -139,32 +165,32 @@
                     </tr>
                     </thead>
                     <tbody>
-                {% for i in records %}
-                    <tr>
-                        <th scope="row">{{  records.index(i)+1}}</th>
-                        <td>{{ i[0] }}</td>
-                        <td>{{ i[1] }}</td>
-                        <td>{{ i[2] }}</td>
-                        {% if i[3] == 1 %}
-                        <td>
-                            <span class="badge badge-pill badge-success">Win</span>
-                        </td>
-                        {% else %}
-                            <td>
-                            <span class="badge badge-pill badge-danger">Lose</span>
-                        </td>
-                        {% endif %}
-                        {% if i[4] == 1 %}
-                        <td>
-                            <span class="badge badge-pill badge-success">Yes</span>
-                        </td>
-                        {% else %}
-                            <td>
-                            <span class="badge badge-pill badge-danger">No</span>
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
+                    {% for i in records %}
+                        <tr>
+                            <th scope="row">{{  records.index(i) + 1 }}</th>
+                            <td>{{ i[0] }}</td>
+                            <td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            {% if i[3] == 1 %}
+                                <td>
+                                    <span class="badge badge-pill badge-success">Win</span>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <span class="badge badge-pill badge-danger">Lose</span>
+                                </td>
+                            {% endif %}
+                            {% if i[4] == 1 %}
+                                <td>
+                                    <span class="badge badge-pill badge-success">Yes</span>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <span class="badge badge-pill badge-danger">No</span>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

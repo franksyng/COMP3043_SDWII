@@ -91,7 +91,7 @@ def index():
     return render_template('index.html', date=date)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/cnmd', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():

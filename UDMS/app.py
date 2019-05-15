@@ -7,8 +7,8 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
 from flask import Flask, render_template, request, redirect, send_file
-from flask_login import  login_required, UserMixin, login_user, logout_user,current_user,LoginManager
-from wtforms import Form, StringField, PasswordField, DateField, validators,SubmitField,SelectField
+from flask_login import  login_required, UserMixin, login_user, logout_user, current_user, LoginManager
+from wtforms import Form, StringField, PasswordField, DateField, validators, SubmitField, SelectField
 
 app = Flask(__name__)
 
@@ -50,6 +50,7 @@ class Attendance(db.Model):
         self.id = udt_id
         self.a_id = a_id
 
+
 class User(UserMixin):
     """User class for flask-login"""
 
@@ -60,14 +61,32 @@ class User(UserMixin):
         self.password = 'admin'
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User(user_id)
+class DateForm(Form):
+    year = StringField('year', [validators.DataRequired()])
+    month = StringField('month', [validators.DataRequired()])
+    day = StringField('day', [validators.DataRequired()])
+
+
+class AssignmentForm(Form):
+    assName = StringField('assName', [validators.DataRequired()])
+    assReq = StringField('assReq', [validators.DataRequired()])
+    assDate = StringField('assDate', [validators.DataRequired()])
+    assTime = StringField('assTime', [validators.DataRequired()])
 
 
 class LoginForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password', [validators.DataRequired()])
+
+
+class SearchForm(Form):
+    select = SelectField('select', [validators.DataRequired()])
+    input = StringField('input', [validators.DataRequired()])
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User(user_id)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -79,11 +98,11 @@ def login():
             user_id = int(form.username.data)
             password = db.query_password(user_id)[0]
         except Exception:
-            message = "你输的连王启正都看不下去了" #如果输入不合规范
+            message = "你输的连王启正都看不下去了"  # 如果输入不合规范
             return render_template('login/login.html', message=message)
         if form.password.data == password:
             # 判断不同职位进入不同网页
-            authority1 =int(db.query_authority(user_id)[0])
+            authority1 = int(db.query_authority(user_id)[0])
             if authority1 == 1: # 管理员
                 admin_user = User(user_id)
                 login_user(admin_user)
@@ -97,7 +116,7 @@ def login():
             message = password  # 真正的密码是啥
             return render_template('login/login.html', message=message)
     else:
-        message = "真就登录都白给" #乱来的
+        message = "真就登录都白给"  # 乱来的
         return render_template('login/login.html', message=message)
 
 
@@ -109,9 +128,9 @@ def homepage():
     db = DatabaseOperations()
     name = db.query_name(int(userid))[0]
     # 检索数据库得到name
-    #检索数据库取得公告板信息赋值给event，
+    # 检索数据库取得公告板信息赋值给event，
     events = ("大皮今天脱单了么", "大皮你的女朋友呢？", "大皮不要总学习啦 陪陪女朋友吧","大皮什么时候请吃饭啊")
-    #四个count数不同的数字 pres excu late abse
+    # 四个count数不同的数字 pres excu late abse
     try:
         pre = int(db.query_attendance(userid, 0)[0])
         exc = int(db.query_attendance(userid, 1)[0])
@@ -122,10 +141,10 @@ def homepage():
         latrate = str(lat*100/(pre+exc+lat+abs))
         absrate = str(abs*100/(pre+exc+lat+abs))
     except Exception:
-        pre =0
-        exc =0
-        lat =0
-        abs =0
+        pre = 0
+        exc = 0
+        lat = 0
+        abs = 0
         prerate = 0
         excrate = 0
         latrate = 0
@@ -147,7 +166,7 @@ def homepage():
         forrate = 0
         skilled = "none"
 
-    temp = max(firwin,secwin,thiwin,forwin)
+    temp = max(firwin, secwin, thiwin, forwin)
     if firwin == temp:
         skilled = "First"
     if secwin == temp:
@@ -162,16 +181,35 @@ def homepage():
                            excrate=excrate, latrate=latrate, absrate=absrate,records= records,
                            firrate=firrate, secrate=secrate,thirate=thirate,forrate=forrate,skilled=skilled)
 
-#for admin 需求和上面几乎一样
+
+# for ordinary user to change pwd
+@app.route('/change_pwd')
+def change_pwd():
+    return render_template('homepage/change_pwd.html')
+
+
+# for admin to change pwd
+@app.route('/change_pwd_admin')
+def change_pwd_admin():
+    return render_template('homepage/change_pwd_admin.html')
+
+
+# for admin to change notice
+@app.route('/change_notice')
+def change_notice():
+    return render_template('homepage/change_notice.html')
+
+
+# for admin 需求和上面几乎一样
 @app.route('/homepage_a', methods=['GET', 'POST'])
 @login_required
 def homepage_a():
     userid = int(current_user.id)
     db = DatabaseOperations()
     name = db.query_name(int(userid))[0]
-    #检索数据库取得公告板信息赋值给event，
+    # 检索数据库取得公告板信息赋值给event，
     events = ("明天秃头不要迟到", "ballball you 要了老命了", "画饼一时爽一直画饼一直爽")
-    #四个count数不同的数字 pres excu late abse
+    # 四个count数不同的数字 pres excu late abse
 
     try:
         pre = int(db.query_attendance(userid, 0)[0])
@@ -183,10 +221,10 @@ def homepage_a():
         latrate = str(lat*100/(pre+exc+lat+abs))
         absrate = str(abs*100/(pre+exc+lat+abs))
     except Exception:
-        pre =0
-        exc =0
-        lat =0
-        abs =0
+        pre = 0
+        exc = 0
+        lat = 0
+        abs = 0
         prerate = 0
         excrate = 0
         latrate = 0
@@ -227,18 +265,18 @@ def homepage_a():
                            firrate=firrate, secrate=secrate, thirate=thirate, forrate=forrate, skilled=skilled)
 
 
-
 @app.route('/assignment', methods=['GET', 'POST'])
 @login_required
 def assignment():
-    #userid = current_user.id 拿到userid
+    # userid = current_user.id 拿到userid
     db = DatabaseOperations()
     assignment = db.query_assignment()
     # a =(("今天过大年","2019-10-31","反正随便写写就好了说的跟真的有人喜欢似的",1),
     #     ("期末考试啦啦啦","2019-11-31","你一布置我就写岂不是显得我很没面子",2))
-    return render_template('assignment/assignment.html',assignments = assignment)
+    return render_template('assignment/assignment.html', assignments=assignment)
 
-@app.route('/assignment_detial/<int:aid>', methods=['GET', 'POST'])
+
+@app.route('/assignment_detail/<int:aid>', methods=['GET', 'POST'])
 @login_required
 def assignment_detail(aid):
     # 将改assignment的具体信息po出
@@ -331,18 +369,11 @@ def attendance_check():
     return 'Id is xx'
 
 
-
-class dateForm(Form):
-    year = StringField('year', [validators.DataRequired()])
-    month = StringField('month', [validators.DataRequired()])
-    day = StringField('day', [validators.DataRequired()])
-
-
 @app.route('/attendance_search', methods=['GET', 'POST'])
 @login_required
 def attendance_search():
     # 数据库判断权限
-    form = dateForm(request.form)
+    form = DateForm(request.form)
     # message = form.username.data
     if request.method == 'POST' and form.validate():
         if form.year.data =='1' and form.month.data == '1':
@@ -362,13 +393,13 @@ def attendance_search():
 @login_required
 def attendance_del():
     # 数据库判断权限
-    form = dateForm(request.form)
+    form = DateForm(request.form)
     # message = form.username.data
     if request.method == 'POST' and form.validate():
         # if it post
         # 将form.year form.month.form.day 拼接成时间并链接数据库删除
         test_message="一点情面都不留真就把我删除呗"
-        return render_template('attendance/attendance_del.html',message = test_message)
+        return render_template('attendance/attendance_del.html', message=test_message)
     else:
         return render_template('attendance/attendance_del.html')
 
@@ -383,7 +414,7 @@ def grading():
     assignment = db.query_assignment_creater(int(current_user.id))
     # a = (("今天过大年", "2019-10-31", "反正随便写写就好了说的跟真的有人喜欢似的", 1),
     #      ("期末考试啦啦啦", "2019-11-31", "你一布置我就写岂不是显得我很没面子", 2))
-    return render_template('grading/grading.html',assignments = assignment,message = message)
+    return render_template('grading/grading.html', assignments=assignment, message=message)
 
 
 @app.route('/grading_detail/<int:aid>')
@@ -397,19 +428,11 @@ def download(fid):
     return send_file(BytesIO(file_info.data), attachment_filename=file_info.doc_name, as_attachment=True)
 
 
-class assignmentForm(Form):
-    assName = StringField('assName', [validators.DataRequired()])
-    assReq = StringField('assReq', [validators.DataRequired()])
-    assDate = StringField('assDate', [validators.DataRequired()])
-    assTime = StringField('assTime', [validators.DataRequired()])
-
-
-
 @app.route('/assignment_new', methods=['GET', 'POST'])
 @login_required
 def assignment_new():
     # 数据库判断权限
-    form = assignmentForm(request.form)
+    form = AssignmentForm(request.form)
     # message = form.username.data
     if request.method == 'POST':
         # 将form内的各种信息写到数据库内 并返回至list界面
@@ -418,14 +441,9 @@ def assignment_new():
         return render_template('assignment/assignment_create.html')
 
 
-class searchForm(Form):
-    select = SelectField('select', [validators.DataRequired()])
-    input = StringField('input', [validators.DataRequired()])
-
-
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    form = searchForm(request.form)
+    form = SearchForm(request.form)
     if request.method == 'POST':
         message = form.select.data
         message1 = form.input.data
@@ -439,7 +457,7 @@ def search():
 
 @app.route('/search_a', methods=['GET', 'POST'])
 def search_a():
-    form = searchForm(request.form)
+    form = SearchForm(request.form)
     if request.method == 'POST':
 
         result = (("1730026109", "qizheng", "wang", "cst"),
