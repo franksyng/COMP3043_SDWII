@@ -154,8 +154,8 @@ class DatabaseOperations():
     def query_attendance_one_year(self):
         cursor = self.__db.cursor()
         try:
-            sql = """SELECT id, name FROM user NATURAL JOIN personal_information 
-            NATURAL JOIN own WHERE grade <= 1"""
+            sql = """SELECT id, name, status FROM user NATURAL JOIN personal_information 
+            NATURAL JOIN own NATURAL JOIN attend NATURAL JOIN attendance_record WHERE grade <= 1"""
             cursor.execute(sql)
             results = cursor.fetchall()
             return results

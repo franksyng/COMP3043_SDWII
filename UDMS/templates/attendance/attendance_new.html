@@ -66,7 +66,8 @@
             <tr>
                 <th scope="col">UDT ID</th>
                 <th scope="col">Name</th>
-                <th scope="col">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -93,6 +94,27 @@
                             <label class="form-check-label" for="inlineRadio4">Absent</label>
                         </div>
                     </td>
+                    {% if member[2] == 0 %}
+                        <td>
+                            <span id="curr_status{{ member[0] }}" class="badge badge-pill badge-success">Present</span>
+                        </td>
+                    {% elif member[2] == 1 %}
+                        <td>
+                            <span id="curr_status{{ member[0] }}" class="badge badge-pill badge-info">Excused</span>
+                        </td>
+                    {% elif member[2] == 2 %}
+                        <td>
+                            <span id="curr_status{{ member[0] }}" class="badge badge-pill badge-warning">Late</span>
+                        </td>
+                    {% elif member[2] == 3 %}
+                        <td>
+                            <span id="curr_status{{ member[0] }}" class="badge badge-pill badge-danger">Absent</span>
+                        </td>
+                    {% else %}
+                        <td>
+                            <span id="curr_status{{ member[0] }}" class="badge badge-pill badge-primary">Unchecked</span>
+                        </td>
+                    {% endif %}
                     <td>
                         <button class="btn btn-sm btn-outline-primary checkButton" member_id="{{ member[0] }}" member_name="{{ member[1] }}">Check</button>
                     </td>
@@ -133,7 +155,7 @@
         $('.checkButton').on('click', function(){
             let member_id = $(this).attr('member_id');
             let member_name = $(this).attr('member_name'),
-            status = $('input:radio:checked').val();
+                status = $('input:radio:checked').val();
 
             req = $.ajax({
                 url: '/attendance/check',
@@ -142,6 +164,41 @@
                 success: function () {
                     alert('Checked ' + member_name + ' as ' + status + '.');
                 }
+            });
+
+            req.done(function(data){
+
+                // Assign jQuery selector to a variable
+                let status_badge = $('#curr_status' +member_id);
+
+                // Clear all the class control badge colour
+                if(status_badge.hasClass("badge-success")){
+                    status_badge.removeClass("badge-success");
+                }else if(status_badge.hasClass("badge-info")){
+                    status_badge.removeClass("badge-info");
+                }else if(status_badge.hasClass("badge-warning")){
+                    status_badge.removeClass("badge-warning");
+                }else if(status_badge.hasClass("badge-danger")){
+                    status_badge.removeClass("badge-danger");
+                }else{
+                    status_badge.removeClass("badge-primary");
+                }
+
+                // Add badge colour according to the status
+                if(data.int_status == 0){
+                    status_badge.addClass("badge-success");
+                }else if(data.int_status == 1){
+                    status_badge.addClass("badge-info");
+                }else if(data.int_status == 2){
+                    status_badge.addClass("badge-warning");
+                }else if(data.int_status == 3){
+                    status_badge.addClass("badge-danger");
+                }else{
+                    status_badge.addClass("badge-primary");
+                }
+
+                // Update the status
+                status_badge.text(data.curr_status);
             });
         });
     });

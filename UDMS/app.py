@@ -1,13 +1,10 @@
-import datetime
-
-import pymysql
+import pymysql, datetime
 from database import DatabaseOperations
 from io import BytesIO
-import datetime
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
-from flask import Flask, render_template, request, redirect, send_file
-from flask_login import  login_required, UserMixin, login_user, logout_user, current_user, LoginManager
+from flask import Flask, render_template, request, redirect, send_file, jsonify
+from flask_login import login_required, UserMixin, login_user, logout_user, current_user, LoginManager
 from wtforms import Form, StringField, PasswordField, DateField, validators, SubmitField, SelectField
 
 app = Flask(__name__)
@@ -35,20 +32,13 @@ class AttendanceRecord(db.Model):
     __tablename__ = 'attendance_record'
     a_id = db.Column(db.BigInteger, primary_key=True)
     status = db.Column(db.Integer)
-
-    def __init__(self, a_id, status):
-        self.a_id = a_id
-        self.status = status
+    time_slot = db.Column(db.DateTime())
 
 
 class Attendance(db.Model):
     __tablename__ = 'attend'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer)
     a_id = db.Column(db.BigInteger, primary_key=True)
-
-    def __init__(self, udt_id, a_id):
-        self.id = udt_id
-        self.a_id = a_id
 
 
 class User(UserMixin):
@@ -306,7 +296,25 @@ def attendance():
 def attendance_new_one_year():
     data = DatabaseOperations()
     members = data.query_attendance_one_year()
-    return render_template('./attendance/attendance_new.html', members=members)
+    curr_status = "primary"
+    status_in_str = "Unchecked"
+
+    # for member in members:
+    #     if member[2] == 0:
+    #         status_in_str = 'Present'
+    #         curr_status = 'success'
+    #     elif member[2] == 1:
+    #         status_in_str = 'Excused'
+    #         curr_status = 'info'
+    #     elif member[2] == 2:
+    #         status_in_str = 'Late'
+    #         curr_status = 'warning'
+    #     elif member[2] == 3:
+    #         status_in_str = 'Absent'
+    #         curr_status = 'danger'
+
+    return render_template('./attendance/attendance_new.html', members=members, status_colour=curr_status,
+                           current_status=status_in_str)
 
 
 @app.route('/attendance/new/TwoYears')
@@ -357,16 +365,13 @@ def attendance_check():
     day = str(getattr(d, 'day'))
     hour = str(getattr(d, 'hour'))
 
-    a_id = str(udt_id) + year + month + day + hour
-
-    attend = Attendance(a_id=a_id, udt_id=udt_id)
-    attendance_record = AttendanceRecord(status=status_in_int, a_id=a_id)
+    attend = Attendance(id=udt_id)
+    attendance_record = AttendanceRecord(status=status_in_int, time_slot=d)
     db.session.add(attend)
     db.session.add(attendance_record)
     db.session.commit()
 
-    # return jsonify({'result': 'success'})
-    return 'Id is xx'
+    return jsonify({'curr_status': status_in_str, 'int_status': status_in_int})
 
 
 @app.route('/attendance_search', methods=['GET', 'POST'])

@@ -1,48 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app.py" line="180" />
+    <bookmark url="file://$PROJECT_DIR$/app.py" line="170" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f1eac02-d4de-448a-b0b7-707417ab06f9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/stickyFooter.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/stickyFooter.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assignment/assignment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/assignment/assignment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assignment/assignment_create.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/assignment/assignment_create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/assignment/assignment_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/assignment/assignment_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/attendance/attendance.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/attendance/attendance.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/attendance/attendance_del.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/attendance/attendance_del.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/attendance/attendance_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/attendance/attendance_new.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/attendance/attendance_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/attendance/attendance_search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/grading/grading.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/grading/grading.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/grading/grading_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/grading/grading_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage/change_notice.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/change_notice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage/change_pwd.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/change_pwd.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage/change_pwd_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/change_pwd_admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage/homepage_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage_admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search/information.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search/information.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search/information_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search/information_admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search/list_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search/list_admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/search/search_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search/search_admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/Flask-1.0.2.dist-info/RECORD" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/Flask-1.0.2.dist-info/RECORD" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/SQLAlchemy-1.3.3-py3.7.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/SQLAlchemy-1.3.3-py3.7.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/SQLAlchemy-1.3.3-py3.7.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/SQLAlchemy-1.3.3-py3.7.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/SQLAlchemy-1.3.3-py3.7.egg-info/installed-files.txt" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/SQLAlchemy-1.3.3-py3.7.egg-info/installed-files.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/setuptools-39.1.0-py3.7.egg" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/setuptools-39.1.0-py3.7.egg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/Activate.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/Activate.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/activate" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/activate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/activate.bat" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/activate.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7-script.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7-script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-script.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/easy_install-script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/flask.exe" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/flask.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip-script.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/pip-script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3-script.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/pip3-script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/pip3.7-script.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/pip3.7-script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/pyvenv.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pyvenv.cfg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +18,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/groupproject$groupproject.coverage" NAME="groupproject Coverage Results" MODIFIED="1557841675112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/UDMS$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1557919600748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/UDMS$UDMS.coverage" NAME="UDMS Coverage Results" MODIFIED="1557923513386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/UDMS$UDMS.coverage" NAME="UDMS Coverage Results" MODIFIED="1557943048931" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -74,14 +39,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="148" column="42" selection-start-line="148" selection-start-column="42" selection-end-line="148" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/attendance/attendance_new.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="159" column="26" lean-forward="true" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/homepage/homepage_admin.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-522">
+              <caret line="175" column="49" selection-start-line="175" selection-start-column="49" selection-end-line="175" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="201" lean-forward="true" selection-start-line="201" selection-end-line="201" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-5">
+              <caret line="340" column="33" selection-start-line="340" selection-start-column="33" selection-end-line="340" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -120,12 +109,13 @@
       <find>DETIAL</find>
       <find>/static</find>
       <find>assignment</find>
-      <find>attendance</find>
       <find>static/</find>
       <find>/attendance</find>
       <find>class</find>
       <find>detial</find>
       <find>homepage</find>
+      <find>attendance</find>
+      <find>check</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -145,9 +135,7 @@
         <option value="$PROJECT_DIR$/templates/warning/authority.html" />
         <option value="$PROJECT_DIR$/Attendance.py" />
         <option value="$PROJECT_DIR$/attendance.py" />
-        <option value="$PROJECT_DIR$/database.py" />
         <option value="$PROJECT_DIR$/IO.py" />
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/templates/homepage/homepage_admin.html" />
         <option value="$PROJECT_DIR$/static/css/stickyFooter.css" />
         <option value="$PROJECT_DIR$/templates/homepage/homepage.html" />
@@ -157,7 +145,6 @@
         <option value="$PROJECT_DIR$/templates/assignment/assignment.html" />
         <option value="$PROJECT_DIR$/templates/assignment/assignment_create.html" />
         <option value="$PROJECT_DIR$/templates/assignment/assignment_detail.html" />
-        <option value="$PROJECT_DIR$/templates/attendance/attendance_new.html" />
         <option value="$PROJECT_DIR$/templates/attendance/attendance_search.html" />
         <option value="$PROJECT_DIR$/templates/attendance/attendance.html" />
         <option value="$PROJECT_DIR$/templates/attendance/attendance_del.html" />
@@ -169,10 +156,13 @@
         <option value="$PROJECT_DIR$/templates/search/list_admin.html" />
         <option value="$PROJECT_DIR$/templates/search/search.html" />
         <option value="$PROJECT_DIR$/templates/search/search_admin.html" />
+        <option value="$PROJECT_DIR$/database.py" />
+        <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/templates/attendance/attendance_new.html" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="952" />
     <option name="width" value="900" />
     <option name="height" value="1087" />
@@ -199,6 +189,18 @@
               <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="UDMS" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="attendance" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UDMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UDMS" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="homepage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -316,11 +318,12 @@
       <workItem from="1557908810365" duration="7861000" />
       <workItem from="1557920913676" duration="514000" />
       <workItem from="1557921478050" duration="2422000" />
+      <workItem from="1557926058831" duration="11147000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87444000" />
+    <option name="totallyTimeSpent" value="98591000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -332,10 +335,32 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="952" y="0" width="900" height="1087" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1861" height="1096" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4993007" visible="true" weight="0.30238095" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993007" visible="true" weight="0.30927262" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" sideWeight="0.5006993" side_tool="true" weight="0.34695652" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.530541" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22429906" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39886847" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32917964" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32949308" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32606438" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.15897436" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32995737" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4993007" visible="true" weight="0.30952382" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5006993" side_tool="true" weight="0.34695652" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -356,7 +381,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" weight="0.15897436" />
       <window_info anchor="right" id="Database" order="4" weight="0.32995737" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -432,13 +457,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/global.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -470,16 +488,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/homepage/homepage_admin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="236" column="18" lean-forward="true" selection-start-line="236" selection-start-column="18" selection-end-line="236" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/assignment/assignment.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="466">
@@ -501,24 +509,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/attendance/attendance_new.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="121" column="9" selection-start-line="121" selection-start-column="9" selection-end-line="121" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/attendance/attendance_search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="449">
           <caret line="117" column="9" selection-start-line="117" selection-start-column="9" selection-end-line="117" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/attendance/attendance.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -606,13 +600,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/attendance/attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1685">
+          <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage/homepage_admin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-522">
+          <caret line="175" column="49" selection-start-line="175" selection-start-column="49" selection-end-line="175" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="201" lean-forward="true" selection-start-line="201" selection-end-line="201" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-5">
+          <caret line="340" column="33" selection-start-line="340" selection-start-column="33" selection-end-line="340" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="148" column="42" selection-start-line="148" selection-start-column="42" selection-end-line="148" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/attendance/attendance_new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="159" column="26" lean-forward="true" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="26" />
         </state>
       </provider>
     </entry>
