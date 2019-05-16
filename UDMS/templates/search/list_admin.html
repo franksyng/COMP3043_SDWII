@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="static/bootstrap-4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/bootstrap-4.3.1/dist/css/bootstrap.min.css">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="static/css/homepage.css">
-    <link rel="stylesheet" href="static/css/global.css">
-    <link rel="stylesheet" href="static/css/stickyFooter.css">
+    <link rel="stylesheet" href="../../static/css/homepage.css">
+    <link rel="stylesheet" href="../../static/css/global.css">
+    <link rel="stylesheet" href="../../static/css/stickyFooter.css">
     <title>Welcome - UDMS</title>
 </head>
 <body>
@@ -18,7 +18,7 @@
 <!-- Navbar Admin -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/homepage_a">
-        <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
+        <img class="navbar-icon mx-auto" src="../../static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -46,37 +46,43 @@
 </nav>
 
 <div class="container">
-        <h1>{{ number }} result(s) has been found</h1>
-        <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">NAME</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">major</th>
-                    <th scope="col">More information</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 {% for i in results %}
-              <tr>
-                <th scope="row">{{ i[0] }}</th>
-                <td>{{ i[1] }}</td>
-                <td>{{ i[2] }}</td>
-                <td>{{ i[3] }}</td>
-                <td><a href="/information/{{ i[0] }}" >more information</a></td>
-                {% endfor %}
-                </tbody>
-              </table>
-              <td><a href="#" >back to search</a></td>
-    </div>
+    <!-- <h1>result(s) has been found</h1>-->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">Last</th>
+            <th scope="col">major</th>
+            <th scope="col">More information</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for page in result_pages.item %}
+            {#              <tr>#}
+            {#                <th scope="row">{{ i[0] }}</th>#}
+            {#                <td>{{ i[1] }}</td>#}
+            {#                <td>{{ i[2] }}</td>#}
+            {#                <td>{{ i[3] }}</td>#}
+            {#                <td><a href="/information/{{ i[0] }}" >more information</a></td>#}
+            <div class="alert alert-danger" role="alert">
+                {{ page.title }}
+            </div>
+        {% endfor %}
+        <div class="alert alert-danger" role="alert">
+            test
+        </div>
+        </tbody>
+    </table>
+    <td><a href="/search_a" >Back to search</a></td>
+</div>
 
 <!-- Footer -->
 <footer class="footer bg-dark py-3">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-sm-10">
-                <img src="static/img/logo/logo_white_notitle.svg" width="80px"><br/><br/>
+                <img src="../../static/img/logo/logo_white_notitle.svg" width="80px"><br/><br/>
                 <p class="text-white">The BNU-HKBU UIC Debate Team, established by The Chinese Youth League of UIC in 2019, is a official
                     debate team that will represent BNU-HKBU UIC to attend different sorts of regional and international
                     debate competitions.</p>
@@ -88,10 +94,8 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
+<script src="../../static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
-<script src="static/js/Chart.js"></script>
-<script src="static/js/Chart.min.js"></script>
+<script src="../../static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

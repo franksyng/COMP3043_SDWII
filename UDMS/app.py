@@ -21,6 +21,14 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT']=timedelta(seconds =1)
 db = SQLAlchemy(app)
 
 
+class PersonalInfo(db.Model):
+    __tablename__ = 'personal_information'
+    info_id = db.Column(db.Integer, primary_key=True)
+    grade = db.Column(db.Integer)
+    major = db.Column(db.String(20))
+    last_name = db.Column(db.String(20))
+
+
 class FileContents(db.Model):
     __tablename__ = 'file_contents'
     file_id = db.Column(db.Integer, primary_key=True)
@@ -454,7 +462,7 @@ def search():
         message1 = form.input.data
         db = DatabaseOperations()
         result = db.query_search(str(form.select.data), str(form.input.data))
-        return render_template('search/list.html',results = result,number = len(result))
+        return render_template('search/list.html', results=result, number=len(result))
 
     else:
         return render_template('search/search.html')
@@ -462,14 +470,18 @@ def search():
 
 @app.route('/search_a', methods=['GET', 'POST'])
 def search_a():
-    form = SearchForm(request.form)
-    if request.method == 'POST':
+    return render_template('search/search_admin.html')
 
-        result = (("1730026109", "qizheng", "wang", "cst"),
-                  ("1730026119", "shuyang", "wu", "cst"))
-        return render_template('search/list_admin.html',results = result,number=len(result))
-    else:
-        return render_template('search/search_admin.html')
+
+@app.route('/list_admin/<int:page_num>', methods=['POST'])
+def result_list_admin(page_num):
+    form = SearchForm(request.form)
+    message = form.select.data
+    message1 = form.input.data
+    result_pages = PersonalInfo.query.paginate(per_page=5, page=page_num, error_out=True)
+    db = DatabaseOperations()
+    result = db.query_search(str(form.select.data), str(form.input.data))
+    return render_template('search/list_admin.html', result_pages=result_pages, results=result, number=len(result))
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])
