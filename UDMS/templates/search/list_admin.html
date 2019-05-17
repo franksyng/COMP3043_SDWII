@@ -51,30 +51,29 @@
         <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">NAME</th>
-            <th scope="col">Last</th>
-            <th scope="col">major</th>
+            <th scope="col">Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Major</th>
             <th scope="col">More information</th>
         </tr>
         </thead>
         <tbody>
-        {% for page in result_pages.item %}
-            {#              <tr>#}
-            {#                <th scope="row">{{ i[0] }}</th>#}
-            {#                <td>{{ i[1] }}</td>#}
-            {#                <td>{{ i[2] }}</td>#}
-            {#                <td>{{ i[3] }}</td>#}
-            {#                <td><a href="/information/{{ i[0] }}" >more information</a></td>#}
-            <div class="alert alert-danger" role="alert">
-                {{ page.title }}
-            </div>
+        {% for page in result_pages.items %}
+            <tr>
+                {% for result in results %}
+                    <th scope="row">{{ result[0] }}</th>
+                    <td>{{ result[1] }}</td>
+                    <td>{{ result[2] }}</td>
+                    <td>{{ result[3] }}</td>
+                {% endfor %}
+            </tr>
         {% endfor %}
         <div class="alert alert-danger" role="alert">
             test
         </div>
         </tbody>
     </table>
-    <td><a href="/search_a" >Back to search</a></td>
+    <a class="btn btn-outline-dark" href="/search_a" >Back to search</a>
 </div>
 
 <!-- Footer -->

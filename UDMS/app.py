@@ -476,12 +476,11 @@ def search_a():
 @app.route('/list_admin/<int:page_num>', methods=['POST'])
 def result_list_admin(page_num):
     form = SearchForm(request.form)
-    message = form.select.data
-    message1 = form.input.data
     result_pages = PersonalInfo.query.paginate(per_page=5, page=page_num, error_out=True)
     db = DatabaseOperations()
-    result = db.query_search(str(form.select.data), str(form.input.data))
-    return render_template('search/list_admin.html', result_pages=result_pages, results=result, number=len(result))
+    results = db.query_search(str(form.select.data), str(form.input.data))
+
+    return render_template('search/list_admin.html', result_pages=result_pages, results=results, number=len(results))
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])
