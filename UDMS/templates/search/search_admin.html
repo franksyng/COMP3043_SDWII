@@ -45,7 +45,7 @@
     </div>
 </nav>
 
-<form method="POST" action="/list_admin">
+<form method="GET" action="{{ url_for('result_list_admin', page=1) }}">
     <div class="container">
         <div class="row text-center">
             <div class="col">

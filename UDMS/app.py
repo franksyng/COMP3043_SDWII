@@ -1,9 +1,8 @@
 import pymysql, datetime
 from database import DatabaseOperations
 from io import BytesIO
-from sqlalchemy import and_, create_engine
-from sqlalchemy.orm import sessionmaker
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_
+from flask_sqlalchemy import SQLAlchemy, Pagination
 from datetime import timedelta
 from flask import Flask, render_template, request, redirect, send_file, jsonify, url_for
 from flask_login import login_required, UserMixin, login_user, logout_user, current_user, LoginManager
@@ -523,7 +522,7 @@ def search_a():
 def result_list_admin():
     input = request.values.get('input', "", type=str)
     select = request.values.get('select', "", type=str)
-    page = request.args.get("page", 1, type=int)
+    page = request.values.get("page", 1, type=int)
 
     # If selected programme
     if select == "major":
@@ -548,7 +547,7 @@ def result_list_admin():
             (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
 
     results = pagination.items
-    return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user)
+    return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user, form_input = input, form_select = select)
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])
