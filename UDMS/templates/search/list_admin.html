@@ -54,25 +54,56 @@
             <th scope="col">Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Major</th>
-            <th scope="col">More information</th>
+            <th scope="col">Detail Info.</th>
         </tr>
         </thead>
         <tbody>
-        {% for page in result_pages.items %}
+        {% for result in results %}
             <tr>
-                {% for result in results %}
-                    <th scope="row">{{ result[0] }}</th>
-                    <td>{{ result[1] }}</td>
-                    <td>{{ result[2] }}</td>
-                    <td>{{ result[3] }}</td>
-                {% endfor %}
+                <th>
+                    {{ result.Own.id }}
+                </th>
+                <td>
+                    {{ result.UserTB.name }}
+                </td>
+                <td>
+                    {{ result.PersonalInfo.last_name }}
+                </td>
+                <td>
+                    {{ result.PersonalInfo.major }}
+                </td>
+                <td><a class="btn btn-sm btn-dark" href="/information/{{ result.Own.id }}" >More Info.</a></td>
             </tr>
         {% endfor %}
-        <div class="alert alert-danger" role="alert">
-            test
-        </div>
         </tbody>
     </table>
+    {#    <nav aria-label="Page navigation example">#}
+    {#        <ul class="pagination">#}
+    {#            <li class="page-item">#}
+    {#                <a class="page-link" href="#" aria-label="Previous">#}
+    {#                    <span aria-hidden="true">Previous</span>#}
+    {#                </a>#}
+    {#            </li>#}
+    {#            {% for page in pagination.iter_pages() %}#}
+    {#                {% if page %}#}
+    {#                    <li class="page-item"><a class="page-link" href="{{ url_for('search_a', page=page) }}">{{ page }}</a></li>#}
+    {#                {% endif %}#}
+    {#            {% else %}#}
+    {#                ...#}
+    {#            {% endfor %}#}
+    {#            <li class="page-item">#}
+    {#                <a class="page-link" href="#" aria-label="Next">#}
+    {#                    <span aria-hidden="true">Next</span>#}
+    {#                </a>#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </nav>#}
+    {% import "search/_macros.html" as macros %}
+    {%if pagination%}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, 'result_list_admin') }}
+        </div>
+    {% endif %}
     <a class="btn btn-outline-dark" href="/search_a" >Back to search</a>
 </div>
 

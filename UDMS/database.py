@@ -93,15 +93,15 @@ class DatabaseOperations():
         cursor = self.__db.cursor()
         sql = ""
         if select =="major":
-            sql = "select id,name,name,major " \
+            sql = "select id,name,last_name,major " \
                   "from user NATURAL join own NATURAL JOIN personal_information " \
                   "where major like '%%%s%%' " % input
         elif select == "name":
-            sql = "select id,name,name major " \
+            sql = "select id,name,last_name major " \
                   "from user NATURAL join own NATURAL JOIN personal_information " \
                   "where name like  '%%%s%%' " % input
         else:
-            sql = "select id,name,name major " \
+            sql = "select id,name,last_name major " \
                   "from user NATURAL join own NATURAL JOIN personal_information " \
                   "where id like  '%%%s%%' " % input
         try:

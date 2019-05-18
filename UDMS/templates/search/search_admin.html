@@ -45,38 +45,39 @@
     </div>
 </nav>
 
-<form method="POST" action="/list_admin/1">
-<div class="container">
-    <div class="row text-center">
-        <div class="col">
-            <form class="searchForm">
-                <img src="../../static/img/logo/logo_black.svg" width="200">
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <div class="form-group mb-3">
-                <select class="form-control" name = "select" id="searchPara1">
-                    <option value = "id">UDT ID</option>
-                    <option value = "name">Name</option>
-                    <option value = "major">Programme</option>
-                </select>
+<form method="POST" action="/list_admin">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <form class="searchForm">
+                    <img src="../../static/img/logo/logo_black.svg" width="200">
+                </form>
             </div>
         </div>
-        <div class="col-8">
-            <div class="form-group">
-                <input type="text" name = "input" class="form-control" id="searchIpt1" placeholder="Input according to the first parameter">
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group mb-3">
+                    <select class="form-control" name = "select" id="searchPara1">
+                        <option value = "id">UDT ID</option>
+                        <option value = "name">Name</option>
+                        <option value = "major">Programme</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="form-group">
+                    <input type="text" name = "input" class="form-control" id="searchIpt1" placeholder="Input according to the first parameter">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+            </div>
         </div>
-    </div>
 
-</div></form>
+    </div>
+</form>
 
 <!-- Footer -->
 <footer class="footer bg-dark py-3">

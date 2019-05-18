@@ -1,9 +1,11 @@
 import pymysql, datetime
 from database import DatabaseOperations
 from io import BytesIO
+from sqlalchemy import and_, create_engine
+from sqlalchemy.orm import sessionmaker
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
-from flask import Flask, render_template, request, redirect, send_file, jsonify
+from flask import Flask, render_template, request, redirect, send_file, jsonify, url_for
 from flask_login import login_required, UserMixin, login_user, logout_user, current_user, LoginManager
 from wtforms import Form, StringField, PasswordField, DateField, validators, SubmitField, SelectField
 
@@ -17,9 +19,8 @@ pymysql.install_as_MySQLdb()
 # The format should be mysql://username:password@localhost/test
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/udms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SEND_FILE_MAX_AGE_DEFAULT']=timedelta(seconds =1)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 db = SQLAlchemy(app)
-
 
 class PersonalInfo(db.Model):
     __tablename__ = 'personal_information'
@@ -27,6 +28,19 @@ class PersonalInfo(db.Model):
     grade = db.Column(db.Integer)
     major = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
+
+
+class Own(db.Model):
+    __tablename__ = 'own'
+    id = db.Column(db.Integer, primary_key=True)
+    info_id = db.Column(db.Integer)
+
+
+class UserTB(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    password = db.Column(db.String(16))
+    name = db.Column(db.String(20))
 
 
 class FileContents(db.Model):
@@ -469,18 +483,72 @@ def search():
 
 
 @app.route('/search_a', methods=['GET', 'POST'])
+@login_required
 def search_a():
+    # input = request.values.get('input', type=str)
+    # select = request.values.get('select', type=str)
+    # page = request.args.get("page", 1, type=int)
+    #
+    # if request.method == 'POST':
+    #     # If selected programme
+    #     if select == "major":
+    #         pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+    #             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+    #             (UserTB, and_(Own.id == UserTB.id)).filter \
+    #             (PersonalInfo.major.like('%' + input + '%')).order_by \
+    #             (UserTB.id.desc()).paginate(page, per_page=5, error_out=False)
+    #     # If selected id
+    #     elif select == "id":
+    #         pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+    #             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+    #             (UserTB, and_(Own.id == UserTB.id)).filter \
+    #             (UserTB.id.like('%' + input + '%')).order_by \
+    #             (UserTB.id.desc()).paginate(page, per_page=5, error_out=False)
+    #     # If selected name
+    #     else:
+    #         pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+    #             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+    #             (UserTB, and_(Own.id == UserTB.id)).filter \
+    #             (UserTB.name.like('%' + input + '%')).order_by \
+    #             (UserTB.id.desc()).paginate(page, per_page=5, error_out=False)
+    #
+    #     results = pagination.items
+    #     return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user)
+    # else:
     return render_template('search/search_admin.html')
 
 
-@app.route('/list_admin/<int:page_num>', methods=['POST'])
-def result_list_admin(page_num):
-    form = SearchForm(request.form)
-    result_pages = PersonalInfo.query.paginate(per_page=5, page=page_num, error_out=True)
-    db = DatabaseOperations()
-    results = db.query_search(str(form.select.data), str(form.input.data))
+@app.route('/list_admin', methods=['GET', 'POST'])
+@login_required
+def result_list_admin():
+    input = request.values.get('input', "", type=str)
+    select = request.values.get('select', "", type=str)
+    page = request.args.get("page", 1, type=int)
 
-    return render_template('search/list_admin.html', result_pages=result_pages, results=results, number=len(results))
+    # If selected programme
+    if select == "major":
+        pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+            (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+            (UserTB, and_(Own.id == UserTB.id)).filter \
+            (PersonalInfo.major.like('%' + input + '%')).order_by \
+            (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
+    # If selected id
+    elif select == "id":
+        pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+            (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+            (UserTB, and_(Own.id == UserTB.id)).filter \
+            (UserTB.id.like('%' + input + '%')).order_by \
+            (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
+    # If selected name
+    else:
+        pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+            (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+            (UserTB, and_(Own.id == UserTB.id)).filter \
+            (UserTB.name.like('%' + input + '%')).order_by \
+            (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
+
+    results = pagination.items
+    return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user)
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])
