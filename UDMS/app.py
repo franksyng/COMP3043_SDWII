@@ -1,7 +1,7 @@
 import pymysql, datetime
 from database import DatabaseOperations
 from io import BytesIO
-from sqlalchemy import and_
+from sqlalchemy import and_, func
 from flask_sqlalchemy import SQLAlchemy, Pagination
 from datetime import timedelta
 from flask import Flask, render_template, request, redirect, send_file, jsonify, url_for
@@ -319,21 +319,6 @@ def attendance_new_one_year():
     members = data.query_attendance_one_year()
     curr_status = "primary"
     status_in_str = "Unchecked"
-
-    # for member in members:
-    #     if member[2] == 0:
-    #         status_in_str = 'Present'
-    #         curr_status = 'success'
-    #     elif member[2] == 1:
-    #         status_in_str = 'Excused'
-    #         curr_status = 'info'
-    #     elif member[2] == 2:
-    #         status_in_str = 'Late'
-    #         curr_status = 'warning'
-    #     elif member[2] == 3:
-    #         status_in_str = 'Absent'
-    #         curr_status = 'danger'
-
     return render_template('./attendance/attendance_new.html', members=members, status_colour=curr_status,
                            current_status=status_in_str)
 
@@ -468,53 +453,58 @@ def assignment_new():
 
 
 @app.route('/search', methods=['GET', 'POST'])
+@login_required
 def search():
-    form = SearchForm(request.form)
-    if request.method == 'POST':
-        message = form.select.data
-        message1 = form.input.data
-        db = DatabaseOperations()
-        result = db.query_search(str(form.select.data), str(form.input.data))
-        return render_template('search/list.html', results=result, number=len(result))
-
-    else:
-        return render_template('search/search.html')
+    return render_template('search/search.html')
 
 
 @app.route('/search_a', methods=['GET', 'POST'])
 @login_required
 def search_a():
-    # input = request.values.get('input', type=str)
-    # select = request.values.get('select', type=str)
-    # page = request.args.get("page", 1, type=int)
-    #
-    # if request.method == 'POST':
-    #     # If selected programme
-    #     if select == "major":
-    #         pagination = db.session.query(PersonalInfo, Own, UserTB).join \
-    #             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
-    #             (UserTB, and_(Own.id == UserTB.id)).filter \
-    #             (PersonalInfo.major.like('%' + input + '%')).order_by \
-    #             (UserTB.id.desc()).paginate(page, per_page=5, error_out=False)
-    #     # If selected id
-    #     elif select == "id":
-    #         pagination = db.session.query(PersonalInfo, Own, UserTB).join \
-    #             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
-    #             (UserTB, and_(Own.id == UserTB.id)).filter \
-    #             (UserTB.id.like('%' + input + '%')).order_by \
-    #             (UserTB.id.desc()).paginate(page, per_page=5, error_out=False)
-    #     # If selected name
-    #     else:
-    #         pagination = db.session.query(PersonalInfo, Own, UserTB).join \
-    #             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
-    #             (UserTB, and_(Own.id == UserTB.id)).filter \
-    #             (UserTB.name.like('%' + input + '%')).order_by \
-    #             (UserTB.id.desc()).paginate(page, per_page=5, error_out=False)
-    #
-    #     results = pagination.items
-    #     return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user)
-    # else:
     return render_template('search/search_admin.html')
+
+
+@app.route('/list', methods=['GET', 'POST'])
+@login_required
+def result_list():
+    input = request.values.get('input', "", type=str)
+    select = request.values.get('select', "", type=str)
+    page = request.values.get("page", 1, type=int)
+    result_num = 0
+
+    # If selected programme
+    if select == "major":
+        large_table = db.session.query(PersonalInfo, Own, UserTB).join \
+            (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+            (UserTB, and_(Own.id == UserTB.id)).filter \
+            (PersonalInfo.major.like('%' + input + '%')).order_by \
+            (UserTB.id.desc())
+        pagination = large_table.paginate(page=page, per_page=5, error_out=False)
+    # If selected id
+    elif select == "id":
+        large_table = db.session.query(PersonalInfo, Own, UserTB).join \
+            (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+            (UserTB, and_(Own.id == UserTB.id)).filter \
+            (UserTB.id.like('%' + input + '%')).order_by \
+            (UserTB.id.desc())
+        pagination = large_table.paginate(page=page, per_page=5, error_out=False)
+    # If selected name
+    else:
+        large_table = db.session.query(PersonalInfo, Own, UserTB).join \
+            (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
+            (UserTB, and_(Own.id == UserTB.id)).filter \
+            (UserTB.name.like('%' + input + '%')).order_by \
+            (UserTB.id.desc())
+        pagination = large_table.paginate(page=page, per_page=5, error_out=False)
+
+    if result_num != 0:
+        result_num = request.values.get('result_num')
+    else:
+        result_num = large_table.count()
+    results = pagination.items
+
+    return render_template('search/list.html', pagination=pagination, results=results, current_user=current_user,
+                           form_input=input, form_select=select, result_num=result_num)
 
 
 @app.route('/list_admin', methods=['GET', 'POST'])
@@ -523,31 +513,41 @@ def result_list_admin():
     input = request.values.get('input', "", type=str)
     select = request.values.get('select', "", type=str)
     page = request.values.get("page", 1, type=int)
+    result_num = 0
 
     # If selected programme
     if select == "major":
-        pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+        large_table = db.session.query(PersonalInfo, Own, UserTB).join \
             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
             (UserTB, and_(Own.id == UserTB.id)).filter \
             (PersonalInfo.major.like('%' + input + '%')).order_by \
-            (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
+            (UserTB.id.desc())
+        pagination = large_table.paginate(page=page, per_page=5, error_out=False)
     # If selected id
     elif select == "id":
-        pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+        large_table = db.session.query(PersonalInfo, Own, UserTB).join \
             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
             (UserTB, and_(Own.id == UserTB.id)).filter \
             (UserTB.id.like('%' + input + '%')).order_by \
-            (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
+            (UserTB.id.desc())
+        pagination = large_table.paginate(page=page, per_page=5, error_out=False)
     # If selected name
     else:
-        pagination = db.session.query(PersonalInfo, Own, UserTB).join \
+        large_table = db.session.query(PersonalInfo, Own, UserTB).join \
             (Own, and_(PersonalInfo.info_id == Own.info_id)).join \
             (UserTB, and_(Own.id == UserTB.id)).filter \
             (UserTB.name.like('%' + input + '%')).order_by \
-            (UserTB.id.desc()).paginate(page=page, per_page=5, error_out=False)
+            (UserTB.id.desc())
+        pagination = large_table.paginate(page=page, per_page=5, error_out=False)
 
+    if result_num != 0:
+        result_num = request.values.get('result_num')
+    else:
+        result_num = large_table.count()
     results = pagination.items
-    return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user, form_input = input, form_select = select)
+
+    return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user,
+                           form_input=input, form_select=select, result_num=result_num)
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])
@@ -630,12 +630,4 @@ def information_a(user_id):
 @login_required
 def authority():
     return render_template('warning/authority.html')
-
-
-
-
-
-
-
-
 

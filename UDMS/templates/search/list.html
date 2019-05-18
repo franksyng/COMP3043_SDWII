@@ -39,30 +39,56 @@
 </nav>
 
 <div class="container">
-    <h1>{{ number }} result(s) has been found</h1>
+    <h3 class="alert alert-success">{{ result_num }} result(s) founded</h3>
     <table class="table">
         <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">NAME</th>
-            <th scope="col">Last</th>
-            <th scope="col">major</th>
-            <th scope="col">More information</th>
+            <th scope="col">Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Major</th>
+            <th scope="col">Detail Info.</th>
         </tr>
         </thead>
         <tbody>
-        {% for i in results %}
-              <tr>
-                <th scope="row">{{ i[0] }}</th>
-                <td>{{ i[1] }}</td>
-                <td>{{ i[2] }}</td>
-                <td>{{ i[3] }}</td>
-                <td><a href="/information/{{ i[0] }}" >more information</a></td>
+        {% for result in results %}
+            <tr>
+                <th>
+                    {{ result.Own.id }}
+                </th>
+                <td>
+                    {{ result.UserTB.name }}
+                </td>
+                <td>
+                    {{ result.PersonalInfo.last_name }}
+                </td>
+                <td>
+                    {{ result.PersonalInfo.major }}
+                </td>
+                <td><a class="btn btn-sm btn-dark" href="/information_a/{{ result.Own.id }}" >More Info.</a></td>
+            </tr>
         {% endfor %}
-            </tbody>
-          </table>
-          <td><a href="#" >back to search</a></td>
+        </tbody>
+    </table>
+    {% import "search/_macros.html" as macros %}
+    {%if pagination%}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, 'result_list_admin') }}
+        </div>
+    {% endif %}
+    <a class="btn btn-outline-dark" href="/search_a" >Back to search</a>
 </div>
+<br/>
+
+<!-- Invisible form to submit the variables -->
+<form method="get" action="/list" id="form" style="display:none">
+    <select name="select">
+        <option value="{{ form_select }}" selected></option>
+    </select>
+    <input name="input" value="{{ form_input }}">
+    <input name="result_num" value="{{ result_num }}">
+    <input name="page" id="next_page">
+</form>
 
 <!-- Footer -->
 <footer class="footer bg-dark py-3">
@@ -84,5 +110,16 @@
 <script src="static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+
+<script>
+    //To get the value of next page together with the search criteria and submit them
+    $(document).ready(function(){
+       $('.pages').click(function(){
+          $('#next_page').val($(this).attr('next-page'));
+          $('#form').submit();
+       });
+    });
+</script>
+
 </body>
 </html>

@@ -46,7 +46,7 @@
 </nav>
 
 <div class="container">
-    <!-- <h1>result(s) has been found</h1>-->
+    <h3 class="alert alert-success">{{ result_num }} result(s) founded</h3>
     <table class="table">
         <thead>
         <tr>
@@ -72,32 +72,11 @@
                 <td>
                     {{ result.PersonalInfo.major }}
                 </td>
-                <td><a class="btn btn-sm btn-dark" href="/information/{{ result.Own.id }}" >More Info.</a></td>
+                <td><a class="btn btn-sm btn-dark" href="/information_a/{{ result.Own.id }}" >More Info.</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    {#    <nav aria-label="Page navigation example">#}
-    {#        <ul class="pagination">#}
-    {#            <li class="page-item">#}
-    {#                <a class="page-link" href="#" aria-label="Previous">#}
-    {#                    <span aria-hidden="true">Previous</span>#}
-    {#                </a>#}
-    {#            </li>#}
-    {#            {% for page in pagination.iter_pages() %}#}
-    {#                {% if page %}#}
-    {#                    <li class="page-item"><a class="page-link" href="{{ url_for('search_a', page=page) }}">{{ page }}</a></li>#}
-    {#                {% endif %}#}
-    {#            {% else %}#}
-    {#                ...#}
-    {#            {% endfor %}#}
-    {#            <li class="page-item">#}
-    {#                <a class="page-link" href="#" aria-label="Next">#}
-    {#                    <span aria-hidden="true">Next</span>#}
-    {#                </a>#}
-    {#            </li>#}
-    {#        </ul>#}
-    {#    </nav>#}
     {% import "search/_macros.html" as macros %}
     {%if pagination%}
         <div class="pagination">
@@ -106,6 +85,7 @@
     {% endif %}
     <a class="btn btn-outline-dark" href="/search_a" >Back to search</a>
 </div>
+<br/>
 
 <!-- Invisible form to submit the variables -->
 <form method="get" action="/list_admin" id="form" style="display:none">
@@ -113,6 +93,7 @@
         <option value="{{ form_select }}" selected></option>
     </select>
     <input name="input" value="{{ form_input }}">
+    <input name="result_num" value="{{ result_num }}">
     <input name="page" id="next_page">
 </form>
 
