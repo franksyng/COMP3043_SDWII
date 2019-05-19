@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="static/css/homepage.css">
     <link rel="stylesheet" href="static/css/global.css">
     <link rel="stylesheet" href="static/css/stickyFooter.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <title>Welcome - UDMS </title>
 </head>
 <body>
@@ -67,6 +68,13 @@
             </nav>
         </div>
     </div>
+    <!-- Rate indicator -->
+    <div class="row">
+        <div class="col-12">
+            <p class="alert alert-success"><i class="fas fa-check-circle"></i> You have <span class="font-weight-bold"> {{ winning_rate }}</span>
+                winning rate and <span class="font-weight-bold"> {{ mvp_rate }} </span>mvp rate! ({{ record_num }} records found)</p>
+        </div>
+    </div>
     <!-- Detail Info. -->
     <div class="row">
         <!-- Match records -->
@@ -78,7 +86,7 @@
                             Match Records
                         </div>
                         <div class="col align-self-end">
-                            <a class="btn btn-sm btn-block btn-outline-light" href="/homepage">Return</a>
+                            <a class="btn btn-sm btn-block btn-outline-light" href="/homepage"><i class="fas fa-undo-alt"></i> Return</a>
                         </div>
                     </div>
                 </div>
@@ -122,7 +130,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {% import "search/_macros.html" as macros %}
+                {% import "homepage/_macros.html" as macros %}
                 {%if pagination%}
                     <div class="pagination justify-content-center pagination-sm">
                         {{ macros.pagination_widget(pagination, 'detail_records_admin') }}
@@ -136,6 +144,9 @@
 <!-- Invisible form to submit the variables -->
 <form method="get" action="/detail_records_admin" id="form" style="display:none">
     <input name="result_num" value="{{ member_id }}">
+    <input name="mvp_rate" value="{{ mvp_rate }}">
+    <input name="winning_rate" value="{{ winning_rate }}">
+    <input name="record_num" value="{{ record_num }}">
     <input name="page" id="next_page">
 </form>
 

@@ -22,6 +22,14 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 db = SQLAlchemy(app)
 
 
+class Assignment(db.Model):
+    __tablename__ = 'assignment'
+    a_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30))
+    a_date = db.Column(db.DateTime)
+    detail = db.Column(db.String(300))
+
+
 class Amatch(db.Model):
     __tablename__ = 'amatch'
     match_id = db.Column(db.Integer, primary_key=True)
@@ -183,10 +191,13 @@ def change_notice():
 @app.route('/homepage', methods=['GET', 'POST'])
 @login_required
 def homepage():
-    userid = int(current_user.id)
     db_sql = DatabaseOperations()
+    userid = int(current_user.id)
     name = db_sql.query_name(int(userid))[0]
     page = request.values.get('page', 1, type=int)
+    winning_rate = 0
+    mvp_rate = 0
+
     # 检索数据库得到name
     # 检索数据库取得公告板信息赋值给event，
     events = ("大皮今天脱单了么", "大皮你的女朋友呢？", "大皮不要总学习啦 陪陪女朋友吧","大皮什么时候请吃饭啊")
@@ -260,6 +271,8 @@ def detail_records():
     userid = int(current_user.id)
     name = db_sql.query_name(int(userid))[0]
     page = request.values.get('page', 1, type=int)
+    winning_rate = 0
+    mvp_rate = 0
 
     records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
         (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
@@ -267,10 +280,33 @@ def detail_records():
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
         (Amatch.date.desc())
 
+    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), Amatch.win == 1).count()
+
+    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), MatchRecord.is_mvp == 1).count()
+
+    record_num = records.count()
+
+    if winning_rate != 0:
+        winning_rate = request.values.get('winning_date')
+    else:
+        winning_rate = format(win_num / record_num, '.2%')
+
+    if mvp_rate != 0:
+        mvp_rate = request.values.get('mvp_rate')
+    else:
+        mvp_rate = format(mvp_num / record_num, '.2%')
+
     pagination = records.paginate(page=page, per_page=5, error_out=False)
     results = pagination.items
 
-    return render_template('homepage/detail_records.html', pagination=pagination, results=results, member_id=userid, name=name)
+    return render_template('homepage/detail_records.html', pagination=pagination, results=results,
+                           member_id=userid, name=name, mvp_rate=mvp_rate, winning_rate=winning_rate, record_num=record_num)
 
 
 # for admin 需求和上面几乎一样
@@ -354,6 +390,8 @@ def detail_records_admin():
     userid = int(current_user.id)
     name = db_sql.query_name(int(userid))[0]
     page = request.values.get('page', 1, type=int)
+    winning_rate = 0
+    mvp_rate = 0
 
     records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
         (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
@@ -361,21 +399,47 @@ def detail_records_admin():
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
         (Amatch.date.desc())
 
+    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), Amatch.win == 1).count()
+
+    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), MatchRecord.is_mvp == 1).count()
+
+    record_num = records.count()
+
+    if winning_rate != 0:
+        winning_rate = request.values.get('winning_date')
+    else:
+        winning_rate = format(win_num / record_num, '.2%')
+
+    if mvp_rate != 0:
+        mvp_rate = request.values.get('mvp_rate')
+    else:
+        mvp_rate = format(mvp_num / record_num, '.2%')
+
     pagination = records.paginate(page=page, per_page=5, error_out=False)
     results = pagination.items
 
-    return render_template('homepage/detail_records_admin.html', pagination=pagination, results=results, member_id=userid, name=name)
+    return render_template('homepage/detail_records_admin.html', pagination=pagination, results=results,
+                           member_id=userid, name=name, mvp_rate=mvp_rate, winning_rate=winning_rate, record_num=record_num)
 
 
 @app.route('/assignment', methods=['GET', 'POST'])
 @login_required
 def assignment():
     # userid = current_user.id 拿到userid
-    db = DatabaseOperations()
-    assignment = db.query_assignment()
+    page = request.values.get("page", 1, type=int)
+
+    pagination = db.session.query(Assignment).paginate(page=page, per_page=3, error_out=False)
+
+    assignment_list = pagination.items
     # a =(("今天过大年","2019-10-31","反正随便写写就好了说的跟真的有人喜欢似的",1),
     #     ("期末考试啦啦啦","2019-11-31","你一布置我就写岂不是显得我很没面子",2))
-    return render_template('assignment/assignment.html', assignments=assignment)
+    return render_template('assignment/assignment.html', pagination=pagination, assignment_list=assignment_list)
 
 
 @app.route('/assignment_detail/<int:aid>', methods=['GET', 'POST'])
