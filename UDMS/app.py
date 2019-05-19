@@ -100,6 +100,19 @@ class Attendance(db.Model):
     a_id = db.Column(db.BigInteger, primary_key=True)
 
 
+class Submit(db.Model):
+    __tablename__ = 'submit'
+    id = db.Column(db.Integer, primary_key=True)
+    file_id = db.Column(db.BigInteger, primary_key=True)
+    doc_grade = db.Column(db.String)
+
+
+class Submission(db.Model):
+    __tablename__ = 'submission'
+    a_id = db.Column(db.Integer, primary_key=True)
+    file_id = db.Column(db.BigInteger, primary_key=True)
+
+
 class User(UserMixin):
     """User class for flask-login"""
 
@@ -126,6 +139,11 @@ class AssignmentForm(Form):
 class LoginForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password', [validators.DataRequired()])
+
+
+class ChangepwdForm(Form):
+    oldpwd = StringField('origin_pwd', [validators.DataRequired()])
+    newpwd = StringField('new_pwd', [validators.DataRequired()])
 
 
 class SearchForm(Form):
@@ -170,21 +188,70 @@ def login():
 
 
 # for ordinary user to change pwd
-@app.route('/change_pwd')
+@app.route('/change_pwd', methods=['GET', 'POST'])
 def change_pwd():
-    return render_template('homepage/change_pwd.html')
+    # form = ChangepwdForm(request.form)
+    dbs = DatabaseOperations()
+    if request.method == 'POST':
+        try:
+            password = dbs.query_password(int(current_user.id))[0]
+        except Exception:
+            message = "你输的连王启正都看不下去了"  # 如果输入不合规范
+            return render_template('homepage/change_pwd.html', message=message)
+        # 白给成功允许修改
+        if request.values.get("origin_pwd") == password:
+            dbs.update_password(int(current_user.id),request.values.get("new_pwd"))
+            return redirect('/')
+        else:
+            message = "你密码错了"
+            return render_template('homepage/change_pwd.html', message=request.values.get("new_pwd"))
+    else:
+        message = "少年你在想什么"
+        return render_template('homepage/change_pwd.html',message =request.values.get("new_pwd"))
 
 
 # for admin to change pwd
-@app.route('/change_pwd_admin')
+@app.route('/change_pwd_admin', methods=['POST', 'GET'])
+@login_required
 def change_pwd_admin():
-    return render_template('homepage/change_pwd_admin.html')
+    # form = ChangepwdForm(request.form)
+    dbs = DatabaseOperations()
+    if request.method == 'POST':
+        try:
+            password = dbs.query_password(int(current_user.id))[0]
+        except Exception:
+            message = "你输的连王启正都看不下去了"  # 如果输入不合规范
+            return render_template('homepage/change_pwd_admin.html', message=message)
+        # 白给成功允许修改
+        if request.values.get("origin_pwd") == password:
+            dbs.update_password(int(current_user.id), request.values.get("new_pwd"))
+            return redirect('/')
+        else:
+            message = "你密码错了"
+            return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"))
+    else:
+        message = "少年你在想什么"
+        return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"))
 
 
 # for admin to change notice
-@app.route('/change_notice')
+@app.route('/change_notice', methods=['GET', 'POST'])
 def change_notice():
-    return render_template('homepage/change_notice.html')
+    dbs = DatabaseOperations()
+    if request.method == 'POST':
+        list1=request.values.get("board").split("\r\n")
+        dbs.drop_notice()
+        dbs.creat_notice()
+        for i in list1:
+            dbs.insert_notice(i)
+        # return render_template('homepage/homepage_admin.html', message=list1)
+        return redirect('/homepage_a')
+    else:
+        # events = dbs.query_notice()
+        # string = ""
+        # for i in events:
+        #     string = string +str(i) +"\r\n"
+        return render_template('homepage/change_notice.html')
 
 
 # for normal user+
@@ -197,10 +264,10 @@ def homepage():
     page = request.values.get('page', 1, type=int)
     winning_rate = 0
     mvp_rate = 0
-
+    events = db_sql.query_notice()
     # 检索数据库得到name
     # 检索数据库取得公告板信息赋值给event，
-    events = ("大皮今天脱单了么", "大皮你的女朋友呢？", "大皮不要总学习啦 陪陪女朋友吧","大皮什么时候请吃饭啊")
+    # events = ("大皮今天脱单了么", "大皮你的女朋友呢？", "大皮不要总学习啦 陪陪女朋友吧","大皮什么时候请吃饭啊")
     # 四个count数不同的数字 pres excu late abse
     try:
         pre = int(db_sql.query_attendance(userid, 0)[0])
@@ -318,9 +385,9 @@ def homepage_a():
     name = db_sql.query_name(int(userid))[0]
     page = request.values.get('page', 1, type=int)
     # 检索数据库取得公告板信息赋值给event，
-    events = ("明天秃头不要迟到", "ballball you 要了老命了", "画饼一时爽一直画饼一直爽")
+    # events = ("明天秃头不要迟到", "ballball you 要了老命了", "画饼一时爽一直画饼一直爽")
     # 四个count数不同的数字 pres excu late abse
-
+    events = db_sql.query_notice()
     try:
         pre = int(db_sql.query_attendance(userid, 0)[0])
         exc = int(db_sql.query_attendance(userid, 1)[0])
@@ -421,7 +488,7 @@ def detail_records_admin():
     else:
         mvp_rate = format(mvp_num / record_num, '.2%')
 
-    pagination = records.paginate(page=page, per_page=5, error_out=False)
+    pagination = records.paginate(page=page, per_page=1, error_out=False)
     results = pagination.items
 
     return render_template('homepage/detail_records_admin.html', pagination=pagination, results=results,
@@ -445,19 +512,34 @@ def assignment():
 @app.route('/assignment_detail/<int:aid>', methods=['GET', 'POST'])
 @login_required
 def assignment_detail(aid):
-    # 将改assignment的具体信息po出
-    return render_template('./assignment/assignment_detail.html')
+    dbs = DatabaseOperations()
+    detail = dbs.query_assignment_detail(int(current_user.id), aid)
+    # 需要assignment_title detail submission status grading status duedate time remaining
+    return render_template('./assignment/assignment_detail.html', assignment=detail,aid = aid)
 
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['inputFile']
+@app.route('/upload/<int:aid>', methods=['POST'])
+def upload(aid):
+    dbs = DatabaseOperations()
+    assignments = dbs.query_already_upload(int(current_user.id), aid)
+    # check if document already been submitted
+    if assignments:
+        #用替换操作更改]
+        return "you already submit the file print gg"
+    else:
 
-    new_file = FileContents(doc_name=file.filename, data=file.read())
-    db.session.add(new_file)
-    db.session.commit()
-    # 是不是要放一个界面更好一些
-    return 'Saved ' + file.filename + ' to the database!'
+        file = request.files['inputFile']
+        file_id = int(str(aid) + current_user.id)
+        new_file = FileContents(file_id=file_id, doc_name=file.filename, data=file.read())
+        db.session.add(new_file)
+        # 是不是要放一个界面更好一些
+        new_submit = Submit(file_id=file_id, id=current_user.id,doc_grade =0)
+        db.session.add(new_submit)
+        new_submission = Submission(file_id=file_id, a_id=aid)
+        db.session.add(new_submission)
+        db.session.commit()
+
+        return 'Saved ' + file.filename + ' to the database!'
 
 
 # here for page of admin
@@ -576,16 +658,21 @@ def grading():
     # 数据库判断权限
     # 根据创建者id搜索作业然后进行打分的项目
     message = int(current_user.id)
-    db = DatabaseOperations()
-    assignment = db.query_assignment_creater(int(current_user.id))
+    dbs = DatabaseOperations()
+    assignments = dbs.query_assignment_creater(int(current_user.id))
+
     # a = (("今天过大年", "2019-10-31", "反正随便写写就好了说的跟真的有人喜欢似的", 1),
     #      ("期末考试啦啦啦", "2019-11-31", "你一布置我就写岂不是显得我很没面子", 2))
-    return render_template('grading/grading.html', assignments=assignment, message=message)
+    return render_template('grading/grading.html', assignments=assignments, message=message)
 
 
 @app.route('/grading_detail/<int:aid>')
 def grading_detail(aid):
-    return render_template('./grading/grading_detail.html')
+    dbs = DatabaseOperations()
+    assignment = dbs.query_assignment_information(aid)
+    number = dbs.query_assignment_number(aid)
+    homeworks = dbs.query_homework_information(aid)
+    return render_template('./grading/grading_detail.html',assignment=assignment, number=number,homeworks=homeworks)
 
 
 @app.route('/download/<int:fid>')
@@ -602,7 +689,14 @@ def assignment_new():
     # message = form.username.data
     if request.method == 'POST':
         # 将form内的各种信息写到数据库内 并返回至list界面
+        title = request.values.get("assName")
+        detail = request.values.get("assReq")
+        dueDate = request.values.get("assDueDate")
+        dueTime = request.values.get("assDueTime")
+        dbs = DatabaseOperations()
+        dbs.insert_new_assignment(int(current_user.id), title, detail, dueDate, dueTime)
         return redirect("/grading")
+        # return render_template('assignment/assignment_create.html',title=title,detail=detail,dueDate=dueDate,dueTime=dueTime)
     else:
         return render_template('assignment/assignment_create.html')
 
@@ -703,6 +797,50 @@ def result_list_admin():
 
     return render_template('search/list_admin.html', pagination=pagination, results=results, current_user=current_user,
                            form_input=input, form_select=select, result_num=result_num)
+
+
+@app.route('/match_create',methods = ['GET', 'POST'])
+@login_required
+def match_create():
+    if request.method == 'POST':
+        matchName = request.values.get("matchName")
+        matchDate = request.values.get("matchDate")
+        matchOppo = request.values.get("matchOppo")
+        firstPosition = int(request.values.get("firstPosition"))
+        secondPosition = int(request.values.get("secondPosition"))
+        thirdPosition = int(request.values.get("thirdPosition"))
+        fourthPosition = int(request.values.get("fourthPosition"))
+        side = request.values.get("side")
+        mvp = int(request.values.get("mvp"))
+        result = request.values.get("result")
+        dbs = DatabaseOperations()
+        dbs.insert_match_record(matchName, matchDate, matchOppo,int(side),int(result))
+        matchID = int(dbs.query_match_id(matchName, matchDate, matchOppo,int(side),int(result))[0])
+        #insert to take_part and record and has
+        #insert into record return r_id
+        r_id1 = int(dbs.insert_record(1, mvp == 1)[0])
+        r_id2 = int(dbs.insert_record(2, mvp == 2)[0])
+        r_id3 = int(dbs.insert_record(3, mvp == 3)[0])
+        r_id4 = int(dbs.insert_record(4, mvp == 4)[0])
+        dbs.insert_take_part(matchID, r_id1)
+        dbs.insert_take_part(matchID, r_id2)
+        dbs.insert_take_part(matchID, r_id3)
+        dbs.insert_take_part(matchID, r_id4)
+        dbs.insert_has(firstPosition, r_id1)
+        dbs.insert_has(secondPosition, r_id2)
+        dbs.insert_has(thirdPosition, r_id3)
+        dbs.insert_has(fourthPosition, r_id4)
+        return render_template('match/match_record.html',matchName=matchName,matchDate=matchDate,side=side,result=result
+                               ,matchOppo = matchOppo)
+    else:
+        return render_template('match/match_record.html')
+
+
+@app.route('/match_del',methods = ['GET', 'POST'])
+@login_required
+def match_del():
+
+    return render_template('match/match_del.html')
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])

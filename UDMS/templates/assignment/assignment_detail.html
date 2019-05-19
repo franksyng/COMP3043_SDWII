@@ -16,7 +16,7 @@
 
 <!-- Navbar Ordinary User -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="../homepage/homepage.html">
+    <a class="navbar-brand" href="/homepage">
         <img class="navbar-icon mx-auto" src="../static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,14 +24,14 @@
     </button>
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="../homepage/homepage.html">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="./assignment.html">Assignment</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="/homepage">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../search/search.html">Search Data</a>
+                <a class="nav-link" href="/assignment">Assignment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Search Data</a>
             </li>
         </ul>
     </div>
@@ -40,14 +40,14 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1 class="h1 mb-3 font-weight-bold">Assignment 1</h1>
+            <h1 class="h1 mb-3 font-weight-bold">{{ assignment[0] }}</h1>
         </div>
     </div>
     <br/>
     <div class="row">
         <div class="col">
             <h5 class="h5 mb-3 font-weight-bold">Requirement</h5>
-            <p class="mb-3">Assignment requirement will be listed here</p>
+            <p class="mb-3">{{ assignment[1] }}</p>
         </div>
     </div>
     <br/>
@@ -62,15 +62,23 @@
                 <tbody>
                 <tr>
                     <th scope="row">Submission status</th>
-                    <td><span class="badge badge-pill badge-danger">No submission</span></td>
+                    {% if assignment[4]==0 %}
+                        <td><span class="badge badge-pill badge-danger">No submission</span></td>
+                    {% else %}
+                         <td><span class="badge badge-pill badge-success">submission</span></td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <th scope="row">Grading status</th>
-                    <td><span class="badge badge-pill badge-danger">Not graded</span></td>
+                    {% if assignment[5]== '0' %}
+                        <td><span class="badge badge-pill badge-danger">Not graded</span></td>
+                    {% else %}
+                         <td><span class="badge badge-pill badge-success">graded</span></td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <th scope="row">Due date</th>
-                    <td>Sunday, 14 April 2019, 11:55 PM</td>
+                    <td>{{ assignment[2] }}  {{ assignment[3] }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Time remaining</th>
@@ -80,7 +88,7 @@
             </table>
         </div>
     </div>
-    <form method="POST" action="/upload" enctype="multipart/form-data" class="was-validated">
+    <form method="POST" action="/upload/{{ aid }}" enctype="multipart/form-data" class="was-validated">
     <div class="row">
         <div class="col">
             <div class="custom-file">

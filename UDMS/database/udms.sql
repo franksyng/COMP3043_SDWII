@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 18, 2019 at 08:14 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- 主机： 127.0.0.1
+-- 生成日期： 2019-05-19 16:10:01
+-- 服务器版本： 10.1.37-MariaDB
+-- PHP 版本： 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `udms`
+-- 数据库： `udms`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `amatch`
+-- 表的结构 `amatch`
 --
 
 CREATE TABLE `amatch` (
@@ -38,17 +38,22 @@ CREATE TABLE `amatch` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `amatch`
+-- 转存表中的数据 `amatch`
 --
 
 INSERT INTO `amatch` (`match_id`, `match_name`, `date`, `win`, `side`, `opponent`) VALUES
+(0, 'Anti-Drug Cup', '2019-05-19', 0, 0, 'BNUZ'),
 (1, 'train', '2019-05-12', 1, 1, 'UCCG'),
-(2, 'better train', '2019-05-13', 0, 0, 'HKBU');
+(2, 'better train', '2019-05-13', 0, 0, 'HKBU'),
+(3, 'Golden League', '2019-05-14', 1, 1, 'BNUZ'),
+(4, 'White Horse', '2019-05-13', 1, 1, 'Malaysia'),
+(5, 'World Cup', '2019-05-11', 1, 1, 'PolyU'),
+(6, 'World Cup', '2019-05-07', 0, 1, 'CUHK');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `assignment`
+-- 表的结构 `assignment`
 --
 
 CREATE TABLE `assignment` (
@@ -62,17 +67,18 @@ CREATE TABLE `assignment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `assignment`
+-- 转存表中的数据 `assignment`
 --
 
 INSERT INTO `assignment` (`a_id`, `a_date`, `title`, `detail`, `create_id`, `dueDate`, `dueTime`) VALUES
 (1, '2019-05-06', 'first draft', 'just write something and nobody will see it', 1730026109, '2019-05-22', '09:00:00'),
-(2, '2019-05-13', 'beautiful', 'interesting we are all gonna die nobody will escape', 1730026119, '2019-05-22', '11:00:00');
+(2, '2019-05-13', 'beautiful', 'interesting we are all gonna die nobody will escape', 1730026119, '2019-05-22', '11:00:00'),
+(3, '2019-10-10', 'd1', 'dddd', 1730026119, '2019-05-12', '12:22:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attend`
+-- 表的结构 `attend`
 --
 
 CREATE TABLE `attend` (
@@ -81,7 +87,7 @@ CREATE TABLE `attend` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `attend`
+-- 转存表中的数据 `attend`
 --
 
 INSERT INTO `attend` (`id`, `a_id`) VALUES
@@ -94,7 +100,7 @@ INSERT INTO `attend` (`id`, `a_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendance_record`
+-- 表的结构 `attendance_record`
 --
 
 CREATE TABLE `attendance_record` (
@@ -104,7 +110,7 @@ CREATE TABLE `attendance_record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `attendance_record`
+-- 转存表中的数据 `attendance_record`
 --
 
 INSERT INTO `attendance_record` (`a_id`, `status`, `time_slot`) VALUES
@@ -117,7 +123,7 @@ INSERT INTO `attendance_record` (`a_id`, `status`, `time_slot`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `belong_to`
+-- 表的结构 `belong_to`
 --
 
 CREATE TABLE `belong_to` (
@@ -126,7 +132,7 @@ CREATE TABLE `belong_to` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `belong_to`
+-- 转存表中的数据 `belong_to`
 --
 
 INSERT INTO `belong_to` (`id`, `group_id`) VALUES
@@ -137,7 +143,7 @@ INSERT INTO `belong_to` (`id`, `group_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comes_from`
+-- 表的结构 `comes_from`
 --
 
 CREATE TABLE `comes_from` (
@@ -146,7 +152,7 @@ CREATE TABLE `comes_from` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `comes_from`
+-- 转存表中的数据 `comes_from`
 --
 
 INSERT INTO `comes_from` (`a_id`, `m_id`) VALUES
@@ -156,7 +162,7 @@ INSERT INTO `comes_from` (`a_id`, `m_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dates`
+-- 表的结构 `dates`
 --
 
 CREATE TABLE `dates` (
@@ -165,7 +171,7 @@ CREATE TABLE `dates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `dates`
+-- 转存表中的数据 `dates`
 --
 
 INSERT INTO `dates` (`date_id`, `date`) VALUES
@@ -175,7 +181,7 @@ INSERT INTO `dates` (`date_id`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dates_events`
+-- 表的结构 `dates_events`
 --
 
 CREATE TABLE `dates_events` (
@@ -185,7 +191,7 @@ CREATE TABLE `dates_events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `dates_events`
+-- 转存表中的数据 `dates_events`
 --
 
 INSERT INTO `dates_events` (`dates_events_id`, `date_id`, `event_id`) VALUES
@@ -195,7 +201,7 @@ INSERT INTO `dates_events` (`dates_events_id`, `date_id`, `event_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `document`
+-- 表的结构 `document`
 --
 
 CREATE TABLE `document` (
@@ -207,7 +213,7 @@ CREATE TABLE `document` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee`
+-- 表的结构 `employee`
 --
 
 CREATE TABLE `employee` (
@@ -219,7 +225,7 @@ CREATE TABLE `employee` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `employee`
+-- 转存表中的数据 `employee`
 --
 
 INSERT INTO `employee` (`FIRST_NAME`, `LAST_NAME`, `AGE`, `SEX`, `INCOME`) VALUES
@@ -230,7 +236,7 @@ INSERT INTO `employee` (`FIRST_NAME`, `LAST_NAME`, `AGE`, `SEX`, `INCOME`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- 表的结构 `events`
 --
 
 CREATE TABLE `events` (
@@ -239,7 +245,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `events`
+-- 转存表中的数据 `events`
 --
 
 INSERT INTO `events` (`event_id`, `event_name`) VALUES
@@ -249,19 +255,19 @@ INSERT INTO `events` (`event_id`, `event_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `file_contents`
+-- 表的结构 `file_contents`
 --
 
 CREATE TABLE `file_contents` (
   `file_id` int(11) NOT NULL,
-  `name` varchar(300) DEFAULT NULL,
+  `doc_name` varchar(300) DEFAULT NULL,
   `data` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `has`
+-- 表的结构 `has`
 --
 
 CREATE TABLE `has` (
@@ -270,17 +276,29 @@ CREATE TABLE `has` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `has`
+-- 转存表中的数据 `has`
 --
 
 INSERT INTO `has` (`id`, `r_id`) VALUES
 (1730026109, 1),
-(1730026109, 2);
+(1730026109, 2),
+(1730026119, 3),
+(1730026119, 4),
+(1730026119, 5),
+(1730026119, 6),
+(1730026119, 7),
+(1730026119, 11),
+(1730026120, 8),
+(1730026120, 12),
+(1730026121, 9),
+(1730026121, 13),
+(1730026122, 10),
+(1730026122, 14);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `meeting`
+-- 表的结构 `meeting`
 --
 
 CREATE TABLE `meeting` (
@@ -292,7 +310,7 @@ CREATE TABLE `meeting` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `meeting_note`
+-- 表的结构 `meeting_note`
 --
 
 CREATE TABLE `meeting_note` (
@@ -304,7 +322,28 @@ CREATE TABLE `meeting_note` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `own`
+-- 表的结构 `notice`
+--
+
+CREATE TABLE `notice` (
+  `text` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 转存表中的数据 `notice`
+--
+
+INSERT INTO `notice` (`text`) VALUES
+('1.'),
+('1.'),
+('1.'),
+('1.'),
+('');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `own`
 --
 
 CREATE TABLE `own` (
@@ -313,7 +352,7 @@ CREATE TABLE `own` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `own`
+-- 转存表中的数据 `own`
 --
 
 INSERT INTO `own` (`id`, `info_id`) VALUES
@@ -338,7 +377,7 @@ INSERT INTO `own` (`id`, `info_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_information`
+-- 表的结构 `personal_information`
 --
 
 CREATE TABLE `personal_information` (
@@ -349,7 +388,7 @@ CREATE TABLE `personal_information` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `personal_information`
+-- 转存表中的数据 `personal_information`
 --
 
 INSERT INTO `personal_information` (`info_id`, `grade`, `major`, `last_name`) VALUES
@@ -374,7 +413,7 @@ INSERT INTO `personal_information` (`info_id`, `grade`, `major`, `last_name`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `record`
+-- 表的结构 `record`
 --
 
 CREATE TABLE `record` (
@@ -384,17 +423,29 @@ CREATE TABLE `record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `record`
+-- 转存表中的数据 `record`
 --
 
 INSERT INTO `record` (`r_id`, `position`, `is_mvp`) VALUES
 (1, 1, 0),
-(2, 2, 1);
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 2, 0),
+(6, 3, 1),
+(7, 1, 0),
+(8, 2, 0),
+(9, 3, 0),
+(10, 4, 0),
+(11, 1, 0),
+(12, 2, 0),
+(13, 3, 0),
+(14, 4, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `submission`
+-- 表的结构 `submission`
 --
 
 CREATE TABLE `submission` (
@@ -405,7 +456,7 @@ CREATE TABLE `submission` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `submit`
+-- 表的结构 `submit`
 --
 
 CREATE TABLE `submit` (
@@ -416,7 +467,7 @@ CREATE TABLE `submit` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `take_part`
+-- 表的结构 `take_part`
 --
 
 CREATE TABLE `take_part` (
@@ -424,10 +475,30 @@ CREATE TABLE `take_part` (
   `r_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- 转存表中的数据 `take_part`
+--
+
+INSERT INTO `take_part` (`match_id`, `r_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(6, 7),
+(6, 8),
+(6, 9),
+(6, 10),
+(6, 11),
+(6, 12),
+(6, 13),
+(6, 14);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- 表的结构 `user`
 --
 
 CREATE TABLE `user` (
@@ -437,14 +508,14 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`id`, `password`, `name`) VALUES
 (1730026028, '123456', 'Wildman'),
 (1730026044, '123456', 'Rory'),
-(1730026109, '123456', 'Qizheng'),
-(1730026119, '123456', 'Shuyang'),
+(1730026109, '645321', 'Qizheng'),
+(1730026119, '654321', 'Shuyang'),
 (1730026120, '123123123', 'HaaaHa'),
 (1730026121, '123456', 'Test2'),
 (1730026122, '123456', 'Shuyang'),
@@ -462,7 +533,7 @@ INSERT INTO `user` (`id`, `password`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_group`
+-- 表的结构 `user_group`
 --
 
 CREATE TABLE `user_group` (
@@ -471,7 +542,7 @@ CREATE TABLE `user_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_group`
+-- 转存表中的数据 `user_group`
 --
 
 INSERT INTO `user_group` (`group_id`, `group_name`) VALUES
@@ -479,36 +550,36 @@ INSERT INTO `user_group` (`group_id`, `group_name`) VALUES
 (1, 'admin');
 
 --
--- Indexes for dumped tables
+-- 转储表的索引
 --
 
 --
--- Indexes for table `amatch`
+-- 表的索引 `amatch`
 --
 ALTER TABLE `amatch`
   ADD PRIMARY KEY (`match_id`);
 
 --
--- Indexes for table `assignment`
+-- 表的索引 `assignment`
 --
 ALTER TABLE `assignment`
   ADD PRIMARY KEY (`a_id`),
   ADD KEY `id` (`create_id`);
 
 --
--- Indexes for table `attend`
+-- 表的索引 `attend`
 --
 ALTER TABLE `attend`
   ADD PRIMARY KEY (`a_id`);
 
 --
--- Indexes for table `attendance_record`
+-- 表的索引 `attendance_record`
 --
 ALTER TABLE `attendance_record`
   ADD PRIMARY KEY (`a_id`);
 
 --
--- Indexes for table `belong_to`
+-- 表的索引 `belong_to`
 --
 ALTER TABLE `belong_to`
   ADD PRIMARY KEY (`id`),
@@ -516,7 +587,7 @@ ALTER TABLE `belong_to`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `comes_from`
+-- 表的索引 `comes_from`
 --
 ALTER TABLE `comes_from`
   ADD PRIMARY KEY (`a_id`),
@@ -524,19 +595,19 @@ ALTER TABLE `comes_from`
   ADD KEY `a_id` (`a_id`);
 
 --
--- Indexes for table `document`
+-- 表的索引 `document`
 --
 ALTER TABLE `document`
   ADD PRIMARY KEY (`d_id`);
 
 --
--- Indexes for table `file_contents`
+-- 表的索引 `file_contents`
 --
 ALTER TABLE `file_contents`
   ADD PRIMARY KEY (`file_id`);
 
 --
--- Indexes for table `has`
+-- 表的索引 `has`
 --
 ALTER TABLE `has`
   ADD PRIMARY KEY (`id`,`r_id`),
@@ -544,89 +615,101 @@ ALTER TABLE `has`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `meeting`
+-- 表的索引 `meeting`
 --
 ALTER TABLE `meeting`
   ADD PRIMARY KEY (`m_id`);
 
 --
--- Indexes for table `meeting_note`
+-- 表的索引 `meeting_note`
 --
 ALTER TABLE `meeting_note`
   ADD PRIMARY KEY (`n_id`,`m_id`);
 
 --
--- Indexes for table `own`
+-- 表的索引 `own`
 --
 ALTER TABLE `own`
   ADD PRIMARY KEY (`id`),
   ADD KEY `inf_id` (`info_id`);
 
 --
--- Indexes for table `personal_information`
+-- 表的索引 `personal_information`
 --
 ALTER TABLE `personal_information`
   ADD PRIMARY KEY (`info_id`);
 
 --
--- Indexes for table `record`
+-- 表的索引 `record`
 --
 ALTER TABLE `record`
   ADD PRIMARY KEY (`r_id`);
 
 --
--- Indexes for table `submission`
+-- 表的索引 `submission`
 --
 ALTER TABLE `submission`
   ADD PRIMARY KEY (`a_id`,`d_id`);
 
 --
--- Indexes for table `submit`
+-- 表的索引 `submit`
 --
 ALTER TABLE `submit`
   ADD PRIMARY KEY (`id`,`as_id`),
   ADD KEY `as_id` (`as_id`);
 
 --
--- Indexes for table `take_part`
+-- 表的索引 `take_part`
 --
 ALTER TABLE `take_part`
   ADD PRIMARY KEY (`match_id`,`r_id`),
   ADD KEY `r_id` (`r_id`);
 
 --
--- Indexes for table `user`
+-- 表的索引 `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_group`
+-- 表的索引 `user_group`
 --
 ALTER TABLE `user_group`
   ADD PRIMARY KEY (`group_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在导出的表使用AUTO_INCREMENT
 --
 
 --
--- AUTO_INCREMENT for table `attend`
+-- 使用表AUTO_INCREMENT `assignment`
+--
+ALTER TABLE `assignment`
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- 使用表AUTO_INCREMENT `attend`
 --
 ALTER TABLE `attend`
   MODIFY `a_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483647;
 
 --
--- AUTO_INCREMENT for table `attendance_record`
+-- 使用表AUTO_INCREMENT `attendance_record`
 --
 ALTER TABLE `attendance_record`
   MODIFY `a_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483647;
 
 --
--- AUTO_INCREMENT for table `file_contents`
+-- 使用表AUTO_INCREMENT `file_contents`
 --
 ALTER TABLE `file_contents`
   MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `record`
+--
+ALTER TABLE `record`
+  MODIFY `r_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

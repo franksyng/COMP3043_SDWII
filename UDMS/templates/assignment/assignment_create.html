@@ -36,7 +36,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                     <a class="dropdown-item" href="/attendance">Attendance</a>
-                    <a class="dropdown-item" href="#">Match System</a>
+                    <a class="dropdown-item" href="/match_create">Match System</a>
                     <a class="dropdown-item" href="/grading">Grading</a>
                 </div>
             </li>
@@ -48,6 +48,8 @@
     <div class="row">
         <div class="col">
             <h1 class="h1 mb-3 font-weight-bold">New an assignment</h1>
+{#
+#}
         </div>
     </div>
     <div class="row">
@@ -65,14 +67,14 @@
         <div class="row">
             <div class="col-6">
                 <label for="assName">Assignment name</label>
-                <input class="form-control is-invalid" name= "assName "id="assName" type="text" required>
+                <input class="form-control is-invalid" name= "assName" id="assName" type="text" required>
                 <div class="invalid-feedback">Please input assignment name</div>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
                 <label for="assReq">Requirement</label>
-                <textarea class="form-control is-invalid" id="assReq" id = "assReq" rows="10px" required></textarea>
+                <textarea class="form-control is-invalid" NAME="assReq" id = "assReq" rows="10px" required></textarea>
                 <div class="invalid-feedback">Please input assignment requirement</div>
             </div>
         </div>

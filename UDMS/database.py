@@ -88,6 +88,78 @@ class DatabaseOperations():
             return results
         except Exception as e:
             return None
+
+    def query_assignment_detail(self, user_id, a_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = "select title,detail,dueDate,dueTime from assignment where a_id = %d" % a_id
+            cursor.execute(sql)
+            results = cursor.fetchall()[0]
+            result = results[:]
+            sqls = "select file_id from submit natural join submission where a_id = %d and id = %d" % (a_id,user_id)
+            cursor.execute(sqls)
+            # self.__db.commit()
+            # temp1 = cursor.fetchall()
+            # if temp1:
+            #     result = result + (1,)
+            #     sql = "select doc_grade from submit natural join submission where a_id = %d and id = %d" % (a_id, user_id)
+            #     cursor.execute(sql)
+            #     self.__db.commit()
+            #     temp2 = cursor.fetchall()
+            #     result = result + temp2[0]
+            # else:
+            #     result = result + (0, '0')
+
+            return result
+        except Exception as e:
+            return None
+
+    def query_assignment_information(self, a_id):
+        """Transfer Python datetime object to string, then do query."""
+        cursor = self.__db.cursor()
+        try:
+            sql = "select title,detail,dueDate,dueTime from assignment where a_id = %d" % a_id
+            cursor.execute(sql)
+            results = cursor.fetchall()[0]
+            return results
+        except Exception as e:
+            return None
+
+    def query_assignment_number(self, a_id):
+        """Transfer Python datetime object to string, then do query."""
+        cursor = self.__db.cursor()
+        try:
+            sql = "select COUNT(file_id) from submission where a_id = %d " % a_id
+            cursor.execute(sql)
+            results = cursor.fetchall()[0][0]
+            return results
+        except Exception as e:
+            return None
+
+    def query_homework_information(self, a_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = "select id,name,doc_name,file_id " \
+                  "from submission natural join submit natural join user natural join file_contents " \
+                  "where a_id = %d " % a_id
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            return results
+        except Exception as e:
+            return None
+
+    def insert_new_assignment(self, user_id, title , detail,dueDate,dueTime):
+        cursor = self.__db.cursor()
+        try:
+            sql = "INSERT INTO assignment" \
+                  "(a_date, title, detail, create_id, dueDate, dueTime) " \
+                  "VALUES ('2019-10-10','%s','%s',%d,'%s','%s')" % (title,detail,user_id,dueDate,dueTime)
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
     def query_search(self,select,input):
         """Transfer Python datetime object to string, then do query."""
         cursor = self.__db.cursor()
@@ -144,7 +216,7 @@ class DatabaseOperations():
             sql = 'SELECT event FROM `events` WHERE `event_id` = ' \
                   '(SELECT `event_id` FROM `dates` INNER JOIN `dates_events` ON dates.date_id = dates_events.date_id ' \
                   'WHERE `date` = str_to_date("{0}","%Y-%m-%d"))'.format(
-                      str(date))
+                str(date))
             cursor.execute(sql)
             results = cursor.fetchall()[0]
             return results
@@ -204,3 +276,140 @@ class DatabaseOperations():
             return results
         except Exception as e:
             return None
+
+    def insert_record(self, position,is_mvp):
+        if is_mvp:
+            is_mvp = 1
+        else:
+            is_mvp = 0
+        cursor = self.__db.cursor()
+        try:
+            sql = "INSERT INTO record" \
+                  "(position, is_mvp) " \
+                  "VALUES (%d,%d)" % (position, is_mvp)
+            cursor.execute(sql)
+            self.__db.commit()
+            sql = "select max(r_id) from record"
+            cursor.execute(sql)
+            results = cursor.fetchall()[0]
+            return results
+        except Exception as e:
+            return
+
+    def insert_take_part(self, m_id, r_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = "INSERT INTO take_part" \
+                  "(match_id, r_id) " \
+                  "VALUES (%d,%d)" % (m_id, r_id)
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
+    def insert_has(self, user_id, r_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = "INSERT INTO has" \
+                  "(id, r_id) " \
+                  "VALUES (%d,%d)" % (user_id, r_id)
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
+    def insert_match_record(self, matchName ,matchDate, matchOppo, side, result):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "insert into amatch (match_name, date, win, side, opponent)  values" \
+                  "('%s','%s','%d','%d','%s') " % (matchName, matchDate, result, side, matchOppo)
+
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
+    def query_match_id(self, matchName ,matchDate, matchOppo, side, result):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "select max(match_id) from amatch "
+
+
+            cursor.execute(sql)
+            results = cursor.fetchall()[0]
+            return results
+            return
+        except Exception as e:
+            return
+
+    def update_password(self, user_id, new_pwd):
+        cursor = self.__db.cursor()
+        try:
+            sql = "UPDATE user SET password ='%s' WHERE id = %d" % (new_pwd, user_id)
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
+    def insert_notice(self, text):
+        cursor = self.__db.cursor()
+        try:
+            # sql = "create table notice(" \
+            #       "text varchar(255))"
+            # cursor.execute(sql)
+            sql = "insert into notice values ('%s')" % text
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
+    def query_notice(self):
+        cursor = self.__db.cursor()
+        try:
+            # sql = "create table notice(" \
+            #       "text varchar(255))"
+            # cursor.execute(sql)
+            sql = "select * from notice"
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            result = ()
+            for i in results:
+                result = result + i
+            return result
+        except Exception as e:
+            return
+
+    def drop_notice(self):
+        cursor = self.__db.cursor()
+        try:
+            sql = "drop table notice"
+            cursor.execute(sql)
+            # for i in text:
+            #     sql ="insert into notice values = %s" % i
+            #     cursor.execute(sql)
+            return
+        except Exception as e:
+            return
+
+    def creat_notice(self):
+        cursor = self.__db.cursor()
+        try:
+            # sql = "drop table notice"
+            # cursor.execute(sql)
+            sql = "create table notice(" \
+                  "text varchar(255))"
+            cursor.execute(sql)
+            # for i in text:
+            #     sql ="insert into notice values = %s" % i
+            #     cursor.execute(sql)
+            return
+        except Exception as e:
+            return
+

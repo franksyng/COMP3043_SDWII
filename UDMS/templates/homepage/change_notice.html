@@ -37,7 +37,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                     <a class="dropdown-item" href="/attendance">Attendance</a>
-                    <a class="dropdown-item" href="#">Match System</a>
+                    <a class="dropdown-item" href="/match_create">Match System</a>
                     <a class="dropdown-item" href="/grading">Grading</a>
                 </div>
             </li>
@@ -80,21 +80,25 @@
         </div>
     </div>
     <br/>
+    <form method="post">
     <div class="row justify-content-center">
         <div class="col-6">
-            <textarea class="form-control" id="origin_pwd" placeholder="Original Pwd" rows="10" cols="20"></textarea>
+            <textarea class="form-control" name="board" id="origin_pwd"  rows="10" cols="20"></textarea>
         </div>
     </div>
         <div class="row justify-content-center">
             <div class="col-4">
                 <br/>
-                <button class="btn btn-block btn-outline-success">Change</button>
+                <button class="btn btn-block btn-outline-success" type = "submit">Change</button>
             </div>
         </div>
+    </form>
     </div>
     <br/>
 </div>
-
+{#<script>#}
+{#    document.getElementById("origin_pwd").value="{{ message }}"#}
+{#</script>#}
 <!-- Footer -->
 <footer class="footer bg-dark py-3">
     <div class="container">
