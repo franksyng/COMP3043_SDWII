@@ -21,6 +21,30 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 db = SQLAlchemy(app)
 
+
+class Amatch(db.Model):
+    __tablename__ = 'amatch'
+    match_id = db.Column(db.Integer, primary_key=True)
+    match_name = db.Column(db.Integer)
+    date = db.Column(db.DateTime)
+    win = db.Column(db.Integer)
+    side = db.Column(db.Integer)
+    opponent = db.Column(db.String(30))
+
+
+class TakePart(db.Model):
+    __tablename__ = 'take_part'
+    match_id = db.Column(db.Integer, primary_key=True)
+    r_id = db.Column(db.Integer, primary_key=True)
+
+
+class MatchRecord(db.Model):
+    __tablename__ = 'record'
+    r_id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.Integer)
+    is_mvp = db.Column(db.Integer)
+
+
 class PersonalInfo(db.Model):
     __tablename__ = 'personal_information'
     info_id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +57,12 @@ class Own(db.Model):
     __tablename__ = 'own'
     id = db.Column(db.Integer, primary_key=True)
     info_id = db.Column(db.Integer)
+
+
+class HasMatch(db.Model):
+    __tablename__ = 'has'
+    id = db.Column(db.Integer, primary_key=True)
+    r_id = db.Column(db.Integer, primary_key=True)
 
 
 class UserTB(db.Model):
@@ -131,68 +161,6 @@ def login():
         return render_template('login/login.html', message=message)
 
 
-# for normal user+
-@app.route('/homepage', methods=['GET', 'POST'])
-@login_required
-def homepage():
-    userid = int(current_user.id)
-    db = DatabaseOperations()
-    name = db.query_name(int(userid))[0]
-    # 检索数据库得到name
-    # 检索数据库取得公告板信息赋值给event，
-    events = ("大皮今天脱单了么", "大皮你的女朋友呢？", "大皮不要总学习啦 陪陪女朋友吧","大皮什么时候请吃饭啊")
-    # 四个count数不同的数字 pres excu late abse
-    try:
-        pre = int(db.query_attendance(userid, 0)[0])
-        exc = int(db.query_attendance(userid, 1)[0])
-        lat = int(db.query_attendance(userid, 2)[0])
-        abs = int(db.query_attendance(userid, 3)[0])
-        prerate = str(pre*100/(pre+exc+lat+abs))
-        excrate = str(exc*100/(pre+exc+lat+abs))
-        latrate = str(lat*100/(pre+exc+lat+abs))
-        absrate = str(abs*100/(pre+exc+lat+abs))
-    except Exception:
-        pre = 0
-        exc = 0
-        lat = 0
-        abs = 0
-        prerate = 0
-        excrate = 0
-        latrate = 0
-        absrate = 0
-    records = db.query_match_info(int(userid))
-    try:
-        firwin = int(db.query_position_times(userid, 1))
-        secwin = int(db.query_position_times(userid, 2))
-        thiwin = int(db.query_position_times(userid, 3))
-        forwin = int(db.query_position_times(userid, 3))
-        firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
-        secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
-        thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
-        forrate = str(forwin * 100 / (firwin + secwin + thiwin + forwin))
-    except Exception:
-        firrate = 0
-        secrate = 0
-        thirate = 0
-        forrate = 0
-        skilled = "none"
-
-    temp = max(firwin, secwin, thiwin, forwin)
-    if firwin == temp:
-        skilled = "First"
-    if secwin == temp:
-        skilled = "Second"
-    if thiwin == temp:
-        skilled = "third"
-    if forwin == temp:
-        skilled = "forth"
-
-    return render_template('homepage/homepage.html', name=name, events=events,
-                           pre=pre, exc=exc, lat=lat, abs=abs, prerate=prerate,
-                           excrate=excrate, latrate=latrate, absrate=absrate,records= records,
-                           firrate=firrate, secrate=secrate,thirate=thirate,forrate=forrate,skilled=skilled)
-
-
 # for ordinary user to change pwd
 @app.route('/change_pwd')
 def change_pwd():
@@ -211,22 +179,23 @@ def change_notice():
     return render_template('homepage/change_notice.html')
 
 
-# for admin 需求和上面几乎一样
-@app.route('/homepage_a', methods=['GET', 'POST'])
+# for normal user+
+@app.route('/homepage', methods=['GET', 'POST'])
 @login_required
-def homepage_a():
+def homepage():
     userid = int(current_user.id)
-    db = DatabaseOperations()
-    name = db.query_name(int(userid))[0]
+    db_sql = DatabaseOperations()
+    name = db_sql.query_name(int(userid))[0]
+    page = request.values.get('page', 1, type=int)
+    # 检索数据库得到name
     # 检索数据库取得公告板信息赋值给event，
-    events = ("明天秃头不要迟到", "ballball you 要了老命了", "画饼一时爽一直画饼一直爽")
+    events = ("大皮今天脱单了么", "大皮你的女朋友呢？", "大皮不要总学习啦 陪陪女朋友吧","大皮什么时候请吃饭啊")
     # 四个count数不同的数字 pres excu late abse
-
     try:
-        pre = int(db.query_attendance(userid, 0)[0])
-        exc = int(db.query_attendance(userid, 1)[0])
-        lat = int(db.query_attendance(userid, 2)[0])
-        abs = int(db.query_attendance(userid, 3)[0])
+        pre = int(db_sql.query_attendance(userid, 0)[0])
+        exc = int(db_sql.query_attendance(userid, 1)[0])
+        lat = int(db_sql.query_attendance(userid, 2)[0])
+        abs = int(db_sql.query_attendance(userid, 3)[0])
         prerate = str(pre*100/(pre+exc+lat+abs))
         excrate = str(exc*100/(pre+exc+lat+abs))
         latrate = str(lat*100/(pre+exc+lat+abs))
@@ -241,14 +210,21 @@ def homepage_a():
         latrate = 0
         absrate = 0
 
-    # 从数据库中调record
+    # Query match record from database and do pagination
+    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
+        (Amatch.date.desc())
 
-    records = db.query_match_info(int(userid))
+    pagination = records.paginate(page=page, per_page=5, error_out=False)
+    results = pagination.items
+
     try:
-        firwin = int(db.query_position_times(userid, 1))
-        secwin = int(db.query_position_times(userid, 2))
-        thiwin = int(db.query_position_times(userid, 3))
-        forwin = int(db.query_position_times(userid, 3))
+        firwin = int(db_sql.query_position_times(userid, 1))
+        secwin = int(db_sql.query_position_times(userid, 2))
+        thiwin = int(db_sql.query_position_times(userid, 3))
+        forwin = int(db_sql.query_position_times(userid, 3))
         firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
         secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
         thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
@@ -263,17 +239,132 @@ def homepage_a():
     temp = max(firwin, secwin, thiwin, forwin)
     if firwin == temp:
         skilled = "First"
-    if secwin == temp:
+    elif secwin == temp:
         skilled = "Second"
-    if thiwin == temp:
+    elif thiwin == temp:
         skilled = "third"
-    if forwin == temp:
+    elif forwin == temp:
         skilled = "forth"
+    else:
+        skilled = ""
 
-    return render_template('homepage/homepage_admin.html', name=name, events=events,
+    return render_template('homepage/homepage.html', name=name, events=events, member_id=userid,
                            pre=pre, exc=exc, lat=lat, abs=abs, prerate=prerate,
-                           excrate=excrate, latrate=latrate, absrate=absrate, records=records,
+                           excrate=excrate, latrate=latrate, absrate=absrate, pagination=pagination, results=results,
                            firrate=firrate, secrate=secrate, thirate=thirate, forrate=forrate, skilled=skilled)
+
+
+@app.route('/detail_records')
+def detail_records():
+    db_sql = DatabaseOperations()
+    userid = int(current_user.id)
+    name = db_sql.query_name(int(userid))[0]
+    page = request.values.get('page', 1, type=int)
+
+    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
+        (Amatch.date.desc())
+
+    pagination = records.paginate(page=page, per_page=5, error_out=False)
+    results = pagination.items
+
+    return render_template('homepage/detail_records.html', pagination=pagination, results=results, member_id=userid, name=name)
+
+
+# for admin 需求和上面几乎一样
+@app.route('/homepage_a', methods=['GET', 'POST'])
+@login_required
+def homepage_a():
+    userid = int(current_user.id)
+    db_sql = DatabaseOperations()
+    name = db_sql.query_name(int(userid))[0]
+    page = request.values.get('page', 1, type=int)
+    # 检索数据库取得公告板信息赋值给event，
+    events = ("明天秃头不要迟到", "ballball you 要了老命了", "画饼一时爽一直画饼一直爽")
+    # 四个count数不同的数字 pres excu late abse
+
+    try:
+        pre = int(db_sql.query_attendance(userid, 0)[0])
+        exc = int(db_sql.query_attendance(userid, 1)[0])
+        lat = int(db_sql.query_attendance(userid, 2)[0])
+        abs = int(db_sql.query_attendance(userid, 3)[0])
+        prerate = str(pre*100/(pre+exc+lat+abs))
+        excrate = str(exc*100/(pre+exc+lat+abs))
+        latrate = str(lat*100/(pre+exc+lat+abs))
+        absrate = str(abs*100/(pre+exc+lat+abs))
+    except Exception:
+        pre = 0
+        exc = 0
+        lat = 0
+        abs = 0
+        prerate = 0
+        excrate = 0
+        latrate = 0
+        absrate = 0
+
+    # Query match record from database and do pagination
+    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
+        (Amatch.date.desc())
+
+    pagination = records.paginate(page=page, per_page=5, error_out=False)
+    results = pagination.items
+
+    try:
+        firwin = int(db_sql.query_position_times(userid, 1))
+        secwin = int(db_sql.query_position_times(userid, 2))
+        thiwin = int(db_sql.query_position_times(userid, 3))
+        forwin = int(db_sql.query_position_times(userid, 3))
+        firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
+        secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
+        thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
+        forrate = str(forwin * 100 / (firwin + secwin + thiwin + forwin))
+    except Exception:
+        firrate = 0
+        secrate = 0
+        thirate = 0
+        forrate = 0
+        skilled = "none"
+
+    temp = max(firwin, secwin, thiwin, forwin)
+    if firwin == temp:
+        skilled = "First"
+    elif secwin == temp:
+        skilled = "Second"
+    elif thiwin == temp:
+        skilled = "third"
+    elif forwin == temp:
+        skilled = "forth"
+    else:
+        skilled = ""
+
+    return render_template('homepage/homepage_admin.html', name=name, events=events, results=results,
+                           pre=pre, exc=exc, lat=lat, abs=abs, prerate=prerate, pagination=pagination,
+                           excrate=excrate, latrate=latrate, absrate=absrate, records=records, member_id=userid,
+                           firrate=firrate, secrate=secrate, thirate=thirate, forrate=forrate, skilled=skilled)
+
+
+@app.route('/detail_records_admin')
+def detail_records_admin():
+    db_sql = DatabaseOperations()
+    userid = int(current_user.id)
+    name = db_sql.query_name(int(userid))[0]
+    page = request.values.get('page', 1, type=int)
+
+    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
+        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
+        (Amatch.date.desc())
+
+    pagination = records.paginate(page=page, per_page=5, error_out=False)
+    results = pagination.items
+
+    return render_template('homepage/detail_records_admin.html', pagination=pagination, results=results, member_id=userid, name=name)
 
 
 @app.route('/assignment', methods=['GET', 'POST'])

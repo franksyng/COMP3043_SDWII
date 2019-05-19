@@ -152,7 +152,16 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-3 shadow" style="max-width: 100rem;">
-                <div class="card-header text-white bg-secondary">Match Records</div>
+                <div class="card-header text-white bg-secondary">
+                    <div class="row">
+                        <div class="col-10">
+                            Match Records
+                        </div>
+                        <div class="col align-self-end">
+                            <a class="btn btn-sm btn-outline-light" href="/detail_records_admin">More records</a>
+                        </div>
+                    </div>
+                </div>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -165,13 +174,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for i in records %}
+                    {% for result in results %}
                         <tr>
-                            <th scope="row">{{  records.index(i) + 1 }}</th>
-                            <td>{{ i[0] }}</td>
-                            <td>{{ i[1] }}</td>
-                            <td>{{ i[2] }}</td>
-                            {% if i[3] == 1 %}
+                            <th scope="row">{{  results.index(result) + 1 }}</th>
+                            <td>{{ result.Amatch.match_name }}</td>
+                            <td>{{ result.Amatch.opponent }}</td>
+                            <td>{{ result.MatchRecord.position }}</td>
+                            {% if result.Amatch.win == 1 %}
                                 <td>
                                     <span class="badge badge-pill badge-success">Win</span>
                                 </td>
@@ -180,7 +189,7 @@
                                     <span class="badge badge-pill badge-danger">Lose</span>
                                 </td>
                             {% endif %}
-                            {% if i[4] == 1 %}
+                            {% if result.MatchRecord.is_mvp == 1 %}
                                 <td>
                                     <span class="badge badge-pill badge-success">Yes</span>
                                 </td>
