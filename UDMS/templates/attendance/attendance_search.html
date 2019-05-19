@@ -25,21 +25,24 @@
     </button>
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/homepage_a">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/search_a">Search Data</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Management
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                     <a class="dropdown-item" href="/attendance">Attendance</a>
-                    <a class="dropdown-item" href="#">Match System</a>
+                    <a class="dropdown-item" href="/match_create">Match System</a>
                     <a class="dropdown-item" href="/grading">Grading</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -55,7 +58,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page"><a href="/attendance">Group Selection</a></li>
                 <li class="breadcrumb-item active">Search</li>
-                <li class="breadcrumb-item"><a href="/attendance_del">Del Sheet</a></li>
+{#                <li class="breadcrumb-item"><a href="/attendance_del">Del Sheet</a></li>#}
             </ol>
         </nav>
     </div>
@@ -93,9 +96,26 @@
             <tr>
                 <td>{{ i[0] }}</td>
                 <td>{{ i[1] }}</td>
-                <td>
-                    <span class="badge badge-pill badge-success">{{ i[2] }}</span>
-                </td>
+                 {% if i[2] == 0 %}
+                        <td>
+                            <span class="badge badge-pill badge-success">Present</span>
+                        </td>
+                    {% elif i[2] == 1 %}
+                        <td>
+                            <span  class="badge badge-pill badge-info">Excused</span>
+                        </td>
+                    {% elif i[2] == 2 %}
+                        <td>
+                            <span  class="badge badge-pill badge-warning">Late</span>
+                        </td>
+                    {% elif i[2] == 3 %}
+                        <td>
+                            <span  class="badge badge-pill badge-danger">Absent</span>
+                        </td>
+                    {% endif %}
+{#                <td>#}
+{#                    <span class="badge badge-pill badge-success">{{ i[2] }}</span>#}
+{#                </td>#}
                 {% endfor %}
             </tbody>
         </table>

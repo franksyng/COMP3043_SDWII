@@ -96,10 +96,10 @@ class DatabaseOperations():
             cursor.execute(sql)
             results = cursor.fetchall()[0]
             result = results[:]
-            sqls = "select file_id from submit natural join submission where a_id = %d and id = %d" % (a_id,user_id)
-            cursor.execute(sqls)
+            # sqls = "select file_id from submit natural join submission where a_id = %d and id = %d" % (a_id,user_id)
+            # cursor2.execute(sqls)
             # self.__db.commit()
-            # temp1 = cursor.fetchall()
+            # temp1 = cursor2.fetchall()
             # if temp1:
             #     result = result + (1,)
             #     sql = "select doc_grade from submit natural join submission where a_id = %d and id = %d" % (a_id, user_id)
@@ -113,6 +113,40 @@ class DatabaseOperations():
             return result
         except Exception as e:
             return None
+
+    def query_assignment_submission(self, a_id, user_id):
+        cursor = self.__db.cursor()
+        try:
+            sqls = "select file_id from submit natural join submission where a_id = %d and id = %d" % (a_id,user_id)
+            cursor.execute(sqls)
+            temp1 = cursor.fetchall()
+            if temp1:
+                return 1
+            else:
+                return 0
+            #     sql = "select doc_grade from submit natural join submission where a_id = %d and id = %d" % (a_id, user_id)
+            #     cursor.execute(sql)
+            #     self.__db.commit()
+            #     temp2 = cursor.fetchall()
+            #     result = result + temp2[0]
+            # else:
+            #     result = result + (0, '0')
+        except Exception as e:
+            return None
+    def query_assignment_grading(self, a_id, user_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = "select file_grade from submit natural join submission where a_id = %d and id = %d" % (a_id, user_id)
+            cursor.execute(sql)
+            temp2 = cursor.fetchall()[0][0]
+            if temp2 == '0':
+                return 0
+            else:
+                return 1
+
+        except Exception as e:
+            return None
+
 
     def query_assignment_information(self, a_id):
         """Transfer Python datetime object to string, then do query."""
@@ -186,12 +220,23 @@ class DatabaseOperations():
         """Transfer Python datetime object to string, then do query."""
         cursor = self.__db.cursor()
         try:
-            sql="select match_name,opponent,position,win,is_mvp " \
+            sql="select match_name,opponent,position,win,is_mvp,side " \
                 "from amatch NATURAL join take_part NATURAL JOIN record " \
                 "where r_id in (SELECT r_id from has where id = %d) order by date desc" % (user_id)
             cursor.execute(sql)
             results = cursor.fetchall()
             return results[:3]
+        except Exception as e:
+            return None
+    def query_match_del(self,date):
+        """Transfer Python datetime object to string, then do query."""
+        cursor = self.__db.cursor()
+        try:
+            sql="select match_name,win,side,opponent,match_id " \
+                "from amatch where date = '%s'" % date
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            return results
         except Exception as e:
             return None
 
@@ -226,8 +271,10 @@ class DatabaseOperations():
     def query_attendance_one_year(self):
         cursor = self.__db.cursor()
         try:
-            sql = """SELECT id, name, status FROM user NATURAL JOIN personal_information 
-            NATURAL JOIN own NATURAL JOIN attend NATURAL JOIN attendance_record WHERE grade <= 1"""
+            # sql = """SELECT id, name, status FROM user NATURAL JOIN own
+            # NATURAL JOIN personal_information NATURAL JOIN attend NATURAL JOIN attendance_record WHERE grade <= 1"""
+            sql = """SELECT id, name FROM user NATURAL JOIN own
+            NATURAL JOIN personal_information WHERE grade <= 1"""
             cursor.execute(sql)
             results = cursor.fetchall()
             return results
@@ -347,6 +394,58 @@ class DatabaseOperations():
         except Exception as e:
             return
 
+    def query_r_id(self, m_id):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "select r_id from take_part where match_id = %d  " % m_id
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            return results
+        except Exception as e:
+            return
+
+    def delete_record(self,r_id):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "delete from record where r_id = %d" % r_id
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+    def delete_has(self,r_id):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "delete from has where r_id = %d" % r_id
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+    def delete_take_part(self,r_id):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "delete from take_part where match_id = %d" % r_id
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+    def delete_match(self,m_id):
+        cursor = self.__db.cursor()
+        try:
+
+            sql = "delete from amatch where match_id = %d" % m_id
+            cursor.execute(sql)
+            self.__db.commit()
+            return
+        except Exception as e:
+            return
+
     def update_password(self, user_id, new_pwd):
         cursor = self.__db.cursor()
         try:
@@ -406,6 +505,41 @@ class DatabaseOperations():
             sql = "create table notice(" \
                   "text varchar(255))"
             cursor.execute(sql)
+            # for i in text:
+            #     sql ="insert into notice values = %s" % i
+            #     cursor.execute(sql)
+            return
+        except Exception as e:
+            return
+
+    def query_already_upload(self,user_id,a_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = """SELECT file_id 
+            from submit NATURAL join submission 
+            where id = %d and a_id = %d """ % (user_id,a_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()[0]
+            return results
+        except Exception as e:
+            return None
+    def query_attendance_date(self,date):
+        cursor = self.__db.cursor()
+        try:
+            sql = """select id,name,status from attendance_record natural join attend natural join user
+            where timestamp between '%s 0:00:00' and '%s 23:59:59'""" %(date,date)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            return results
+        except Exception as e:
+            return None
+
+    def delete_file(self, file_id):
+        cursor = self.__db.cursor()
+        try:
+            sql = "delete from file_contents where file_id = %d" % file_id
+            cursor.execute(sql)
+            self.__db.commit()
             # for i in text:
             #     sql ="insert into notice values = %s" % i
             #     cursor.execute(sql)

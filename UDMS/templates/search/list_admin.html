@@ -19,7 +19,7 @@
 <!-- Navbar Admin -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/homepage_a">
-        <img class="navbar-icon mx-auto" src="../../static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
+        <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,17 +30,20 @@
                 <a class="nav-link" href="/homepage_a">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/search">Search Data</a>
+                <a class="nav-link" href="/search_a">Search Data</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Management
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                    <a class="dropdown-item" href="../attendence">Attendance</a>
-                    <a class="dropdown-item" href="#">Match System</a>
-                    <a class="dropdown-item" href="../grading">Grading</a>
+                    <a class="dropdown-item" href="/attendance">Attendance</a>
+                    <a class="dropdown-item" href="/match_create">Match System</a>
+                    <a class="dropdown-item" href="/grading">Grading</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>

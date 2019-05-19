@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view='/'
 app.secret_key = b'UIC-Calendar-20190408'
 # 连接数据库
 pymysql.install_as_MySQLdb()
@@ -20,6 +21,40 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/udms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 db = SQLAlchemy(app)
+
+
+class UserGroup(db.Model):
+    __tablename__ = 'user_group'
+    group_id = db.Column(db.Integer, primary_key=True)
+    group_name = db.Column(db.String(15))
+
+
+class NoticeBoard(db.Model):
+    __tablename__ = 'notice'
+    notice_id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(255))
+
+
+# Entity to record meeting information
+class MeetingInfo(db.Model):
+    __tablename__ = 'meeting'
+    m_id = db.Column(db.Integer, primary_key=True)
+    theme = db.Column(db.String(20))
+    meeting_date = db.Column(db.DateTime)
+
+
+# A relationship between attendance and meeting
+class AttendanceOfMeeting(db.Model):
+    __tablename__ = 'comes_from'
+    a_id = db.Column(db.Integer, primary_key=True)
+    m_id = db.Column(db.Integer)
+
+
+# A member belongs to a user group
+class PermissionGroup(db.Model):
+    __tablename__ = 'belong_to'
+    id = db.Column(db.Integer, primary_key=True)
+    group_id = db.Column(db.Integer)
 
 
 class Assignment(db.Model):
@@ -91,7 +126,7 @@ class AttendanceRecord(db.Model):
     __tablename__ = 'attendance_record'
     a_id = db.Column(db.BigInteger, primary_key=True)
     status = db.Column(db.Integer)
-    time_slot = db.Column(db.DateTime())
+    timestamp = db.Column(db.DateTime())
 
 
 class Attendance(db.Model):
@@ -104,7 +139,7 @@ class Submit(db.Model):
     __tablename__ = 'submit'
     id = db.Column(db.Integer, primary_key=True)
     file_id = db.Column(db.BigInteger, primary_key=True)
-    doc_grade = db.Column(db.String)
+    file_grade = db.Column(db.String)
 
 
 class Submission(db.Model):
@@ -216,6 +251,8 @@ def change_pwd():
 def change_pwd_admin():
     # form = ChangepwdForm(request.form)
     dbs = DatabaseOperations()
+    if not int(dbs.query_authority(int(current_user.id))[0]):
+        return redirect("/authority")
     if request.method == 'POST':
         try:
             password = dbs.query_password(int(current_user.id))[0]
@@ -514,26 +551,36 @@ def assignment():
 def assignment_detail(aid):
     dbs = DatabaseOperations()
     detail = dbs.query_assignment_detail(int(current_user.id), aid)
+    submission = dbs.query_assignment_submission(aid,int(current_user.id))
+    grading = dbs.query_assignment_grading(aid,int(current_user.id))
     # 需要assignment_title detail submission status grading status duedate time remaining
-    return render_template('./assignment/assignment_detail.html', assignment=detail,aid = aid)
+    return render_template('.'
+                           '/assignment/assignment_detail.html', assignment=detail,aid = aid, submission=submission
+                           ,grading=grading)
 
 
 @app.route('/upload/<int:aid>', methods=['POST'])
 def upload(aid):
+    file = request.files['inputFile']
+    file_id = int(str(aid) + current_user.id)  # Use assignment id and user id to specify a file
     dbs = DatabaseOperations()
-    assignments = dbs.query_already_upload(int(current_user.id), aid)
+    already_submit = dbs.query_already_upload(int(current_user.id), aid)
     # check if document already been submitted
-    if assignments:
-        #用替换操作更改]
-        return "you already submit the file print gg"
+    if already_submit:
+        exist_id = int(already_submit[0])
+        dbs.delete_file(exist_id)
+        # old_submission = db.session.query(FileContents).filter_by(file_id=exist_id)
+        # db.session.delete(old_submission)
+        # db.session.commit()
+        new_file = FileContents(file_id=exist_id, doc_name=file.filename, data=file.read())
+        db.session.add(new_file)
+        db.session.commit()
+        return 'Saved ' + file.filename + ' to the database!'
     else:
-
-        file = request.files['inputFile']
-        file_id = int(str(aid) + current_user.id)
         new_file = FileContents(file_id=file_id, doc_name=file.filename, data=file.read())
         db.session.add(new_file)
         # 是不是要放一个界面更好一些
-        new_submit = Submit(file_id=file_id, id=current_user.id,doc_grade =0)
+        new_submit = Submit(file_id=file_id, id=current_user.id, file_grade=0)
         db.session.add(new_submit)
         new_submission = Submission(file_id=file_id, a_id=aid)
         db.session.add(new_submission)
@@ -603,13 +650,9 @@ def attendance_check():
         status_in_int = 3
 
     d = datetime.datetime.now()
-    year = str(getattr(d, 'year'))
-    month = str(getattr(d, 'month'))
-    day = str(getattr(d, 'day'))
-    hour = str(getattr(d, 'hour'))
 
     attend = Attendance(id=udt_id)
-    attendance_record = AttendanceRecord(status=status_in_int, time_slot=d)
+    attendance_record = AttendanceRecord(status=status_in_int, timestamp=d)
     db.session.add(attend)
     db.session.add(attendance_record)
     db.session.commit()
@@ -621,21 +664,23 @@ def attendance_check():
 @login_required
 def attendance_search():
     # 数据库判断权限
-    form = DateForm(request.form)
+    dbs = DatabaseOperations()
     # message = form.username.data
-    if request.method == 'POST' and form.validate():
-        if form.year.data =='1' and form.month.data == '1':
-            # if it post
-            # form.year form.month.form.day 确认时间并查询语句
-            # 判断不同职位进入不同
-            test_persons = [(1, "吴飞机","今天白给"), (2, "白给大侠","鬼知道去哪里了"), (3,"真的好累阿","约会去了"),
-                            (4,"要命命","一个人的旅行")]
-            return render_template('attendance/attendance_search.html', people = test_persons)
-        else:
-            return render_template('attendance/attendance_search.html')
+    if request.method == 'POST' :
+        year = request.values.get("year")
+        month = request.values.get("month")
+        day = request.values.get("day")
+        # if it post
+        date = year +"-"+month+"-"+day
+        persons =dbs.query_attendance_date(date)
+
+        # form.year form.month.form.day 确认时间并查询语句
+        # 判断不同职位进入不同
+        # test_persons = [(1, "吴飞机","今天白给"), (2, "白给大侠","鬼知道去哪里了"), (3,"真的好累阿","约会去了"),
+        #                 (4,"要命命","一个人的旅行")]
+        return render_template('attendance/attendance_search.html', people = persons)
     else:
         return render_template('attendance/attendance_search.html')
-
 
 @app.route('/attendance_del', methods=['GET', 'POST'])
 @login_required
@@ -836,26 +881,42 @@ def match_create():
         return render_template('match/match_record.html')
 
 
-@app.route('/match_del',methods = ['GET', 'POST'])
+@app.route('/match_del/<int:mid>',methods = ['GET', 'POST'])
 @login_required
-def match_del():
+def match_del(mid):
+    dbs = DatabaseOperations()
+    if mid!=0:
+        r_id=dbs.query_r_id(mid)
+        # return render_template('match/match_del.html',matchs = r_id,r_id = r_id)
+        for i in r_id:
+            dbs.delete_record(i[0])
+            dbs.delete_has(i[0])
+            dbs.delete_take_part(i[0])
+        dbs.delete_match(mid)
+        return redirect('/match_del/0')
+    if request.method == 'POST':
+        dbs=DatabaseOperations()
+        matchDate = request.values.get("date")
+        matchs = dbs.query_match_del(matchDate)
+        return render_template('match/match_del.html',matchs = matchs)
+
 
     return render_template('match/match_del.html')
 
 
 @app.route('/information/<int:user_id>', methods=['GET', 'POST'])
 def information(user_id):
-    db = DatabaseOperations()
-    name = db.query_name(int(user_id))[0]
+    dbs = DatabaseOperations()
+    name = dbs.query_name(int(user_id))[0]
     # 检索数据库取得公告板信息赋值给event，
     # 从数据库中调record
     # 数据库拿到其他信息
-    records = db.query_match_info(int(user_id))
+    records = dbs.query_match_info(int(user_id))
     try:
-        firwin = int(db.query_position_times(user_id, 1))
-        secwin = int(db.query_position_times(user_id, 2))
-        thiwin = int(db.query_position_times(user_id, 3))
-        forwin = int(db.query_position_times(user_id, 3))
+        firwin = int(dbs.query_position_times(user_id, 1))
+        secwin = int(dbs.query_position_times(user_id, 2))
+        thiwin = int(dbs.query_position_times(user_id, 3))
+        forwin = int(dbs.query_position_times(user_id, 3))
         firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
         secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
         thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
@@ -882,17 +943,17 @@ def information(user_id):
 
 @app.route('/information_a/<int:user_id>', methods=['GET', 'POST'])
 def information_a(user_id):
-    db = DatabaseOperations()
-    name = db.query_name(int(user_id))[0]
+    dbs = DatabaseOperations()
+    name = dbs.query_name(int(user_id))[0]
     # 检索数据库取得公告板信息赋值给event，
     # 从数据库中调record
     # 数据库拿到其他信息
     records = db.query_match_info(int(user_id))
     try:
-        firwin = int(db.query_position_times(user_id, 1))
-        secwin = int(db.query_position_times(user_id, 2))
-        thiwin = int(db.query_position_times(user_id, 3))
-        forwin = int(db.query_position_times(user_id, 3))
+        firwin = int(dbs.query_position_times(user_id, 1))
+        secwin = int(dbs.query_position_times(user_id, 2))
+        thiwin = int(dbs.query_position_times(user_id, 3))
+        forwin = int(dbs.query_position_times(user_id, 3))
         firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
         secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
         thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
@@ -917,6 +978,11 @@ def information_a(user_id):
                            firrate=firrate, secrate=secrate, thirate=thirate, forrate=forrate,
                            skilled=skilled,records = records)
 
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 # warning page
 @app.route('/authority', methods=['GET', 'POST'])

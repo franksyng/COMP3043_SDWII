@@ -17,7 +17,7 @@
 
 <!-- Navbar Ordinary User -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="homepage">
+    <a class="navbar-brand" href="/homepage">
         <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/homepage.html">Home</a>
+                <a class="nav-link" href="/homepage_a">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/assignment">Assignment</a>
@@ -34,9 +34,13 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/search">Search Data</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
+
 <form method="GET" action="{{ url_for('result_list', page=1) }}">
     <div class="container">
         <div class="row text-center">
