@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="static/css/homepage.css">
     <link rel="stylesheet" href="static/css/global.css">
     <link rel="stylesheet" href="static/css/stickyFooter.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <title>Welcome - UDMS </title>
 
 
@@ -43,10 +44,17 @@
         </ul>
     </div>
 </nav>
-<center>
-    <p> You are not allowed to visit this page</p>
-    <a href="/homepage">back to your homepage</a>
-</center>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <center>
+                <p class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> You are not allowed to visit this page</p>
+                <a class="btn btn-danger" href="/homepage">Back to your homepage</a>
+            </center>
+        </div>
+    </div>
+</div>
 <!-- Footer -->
 <footer class="footer bg-dark py-3">
     <div class="container">

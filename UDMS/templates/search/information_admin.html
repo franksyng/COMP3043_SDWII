@@ -18,7 +18,7 @@
 <!-- Navbar Admin -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/homepage_a">
-        <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
+        <img class="navbar-icon mx-auto" src="../../static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -51,9 +51,9 @@
 <!-- Main container -->
 <div class="container">
     <!-- Greeting -->
-    <<div class="row">
+    <div class="row">
         <div class="col">
-            <h1 class="h1 mb-3 font-weight-bold">this is the information about {{ name }}</h1>
+            <h1 class="h1 mb-3 font-weight-bold">This is the information about {{ name }}</h1>
         </div>
     </div>
     <!-- Detail Info. -->
@@ -74,32 +74,32 @@
                     </tr>
                     </thead>
                     <tbody>
-                {% for i in records %}
-                    <tr>
-                        <th scope="row">{{  records.index(i)+1}}</th>
-                        <td>{{ i[0] }}</td>
-                        <td>{{ i[1] }}</td>
-                        <td>{{ i[2] }}</td>
-                        {% if i[3] == 1 %}
-                        <td>
-                            <span class="badge badge-pill badge-success">Win</span>
-                        </td>
-                        {% else %}
-                            <td>
-                            <span class="badge badge-pill badge-danger">Lose</span>
-                        </td>
-                        {% endif %}
-                        {% if i[4] == 1 %}
-                        <td>
-                            <span class="badge badge-pill badge-success">Yes</span>
-                        </td>
-                        {% else %}
-                            <td>
-                            <span class="badge badge-pill badge-danger">No</span>
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
+                    {% for i in records %}
+                        <tr>
+                            <th scope="row">{{  records.index(i) + 1 }}</th>
+                            <td>{{ i[0] }}</td>
+                            <td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            {% if i[3] == 1 %}
+                                <td>
+                                    <span class="badge badge-pill badge-success">Win</span>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <span class="badge badge-pill badge-danger">Lose</span>
+                                </td>
+                            {% endif %}
+                            {% if i[4] == 1 %}
+                                <td>
+                                    <span class="badge badge-pill badge-success">Yes</span>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <span class="badge badge-pill badge-danger">No</span>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -131,6 +131,11 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-end">
+        <div class="col-2">
+            <a class="btn btn-dark btn-block text-light" href="/list_admin">Return</a>
+        </div>
+    </div>
 </div>
 
 
@@ -154,7 +159,5 @@
 <script src="../static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="../static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
-<script src="../static/js/Chart.js"></script>
-<script src="../static/js/Chart.min.js"></script>
 </body>
 </html>

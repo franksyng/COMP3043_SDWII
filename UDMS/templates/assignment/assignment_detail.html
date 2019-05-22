@@ -17,7 +17,7 @@
 <!-- Navbar Ordinary User -->
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/homepage">
-        <img class="navbar-icon mx-auto" src="static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
+        <img class="navbar-icon mx-auto" src="../../static/img/logo/logo_white_notitle.svg" width="80" height="40" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#homeNavbar" aria-controls="homeNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="homeNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/homepage_a">Home</a>
+                <a class="nav-link" href="/homepage">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="/assignment">Assignment</a>
@@ -68,16 +68,16 @@
                     {% if submission == 0 %}
                         <td><span class="badge badge-pill badge-danger">No submission</span></td>
                     {% else %}
-                         <td><span class="badge badge-pill badge-success">submission</span></td>
+                         <td><span class="badge badge-pill badge-success">Submission</span></td>
                     {% endif %}
                 </tr>
                 <tr>
                     <th scope="row">Grading status</th>
-                    {% if grading == 0 %}
+{#                    {% if grading == 0 %}#}
                         <td><span class="badge badge-pill badge-danger">Not graded</span></td>
-                    {% else %}
-                         <td><span class="badge badge-pill badge-success">graded</span></td>
-                    {% endif %}
+{#                    {% else %}#}
+{#                         <td><span class="badge badge-pill badge-success">graded</span></td>#}
+{#                    {% endif %}#}
                 </tr>
                 <tr>
                     <th scope="row">Due date</th>
@@ -121,7 +121,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-sm-10">
-                <img src="static/img/logo/logo_white_notitle.svg" width="80px"><br/><br/>
+                <img src="../../static/img/logo/logo_white_notitle.svg" width="80px"><br/><br/>
                 <p class="text-white">The BNU-HKBU UIC Debate Team, established by The Chinese Youth League of UIC in 2019, is a official
                     debate team that will represent BNU-HKBU UIC to attend different sorts of regional and international
                     debate competitions.</p>

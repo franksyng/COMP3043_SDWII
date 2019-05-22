@@ -29,10 +29,10 @@ class UserGroup(db.Model):
     group_name = db.Column(db.String(15))
 
 
-class NoticeBoard(db.Model):
-    __tablename__ = 'notice'
-    notice_id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(255))
+# class NoticeBoard(db.Model):
+#     __tablename__ = 'notice'
+#     notice_id = db.Column(db.Integer, primary_key=True)
+#     text = db.Column(db.String(255))
 
 
 # Entity to record meeting information
@@ -63,6 +63,9 @@ class Assignment(db.Model):
     title = db.Column(db.String(30))
     a_date = db.Column(db.DateTime)
     detail = db.Column(db.String(300))
+    create_id = db.Column(db.Integer)
+    dueDate = db.Column(db.Date)
+    dueTime = db.Column(db.Time)
 
 
 class Amatch(db.Model):
@@ -91,7 +94,7 @@ class MatchRecord(db.Model):
 class PersonalInfo(db.Model):
     __tablename__ = 'personal_information'
     info_id = db.Column(db.Integer, primary_key=True)
-    grade = db.Column(db.Integer)
+    grade = db.Column(db.Float(.2))
     major = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
 
@@ -144,7 +147,7 @@ class Submit(db.Model):
 
 class Submission(db.Model):
     __tablename__ = 'submission'
-    a_id = db.Column(db.Integer, primary_key=True)
+    a_id = db.Column(db.Integer)
     file_id = db.Column(db.BigInteger, primary_key=True)
 
 
@@ -227,22 +230,24 @@ def login():
 def change_pwd():
     # form = ChangepwdForm(request.form)
     dbs = DatabaseOperations()
+    userid = int(current_user.id)
+    name = dbs.query_name(int(userid))[0]
     if request.method == 'POST':
         try:
             password = dbs.query_password(int(current_user.id))[0]
         except Exception:
             message = "你输的连王启正都看不下去了"  # 如果输入不合规范
-            return render_template('homepage/change_pwd.html', message=message)
+            return render_template('homepage/change_pwd.html', message=message, name=name)
         # 白给成功允许修改
         if request.values.get("origin_pwd") == password:
             dbs.update_password(int(current_user.id),request.values.get("new_pwd"))
             return redirect('/')
         else:
             message = "你密码错了"
-            return render_template('homepage/change_pwd.html', message=request.values.get("new_pwd"))
+            return render_template('homepage/change_pwd.html', message=request.values.get("new_pwd"), name=name)
     else:
         message = "少年你在想什么"
-        return render_template('homepage/change_pwd.html',message =request.values.get("new_pwd"))
+        return render_template('homepage/change_pwd.html',message =request.values.get("new_pwd"), name=name)
 
 
 # for admin to change pwd
@@ -251,6 +256,8 @@ def change_pwd():
 def change_pwd_admin():
     # form = ChangepwdForm(request.form)
     dbs = DatabaseOperations()
+    userid = int(current_user.id)
+    name = dbs.query_name(int(userid))[0]
     if not int(dbs.query_authority(int(current_user.id))[0]):
         return redirect("/authority")
     if request.method == 'POST':
@@ -258,23 +265,25 @@ def change_pwd_admin():
             password = dbs.query_password(int(current_user.id))[0]
         except Exception:
             message = "你输的连王启正都看不下去了"  # 如果输入不合规范
-            return render_template('homepage/change_pwd_admin.html', message=message)
+            return render_template('homepage/change_pwd_admin.html', message=message, name=name)
         # 白给成功允许修改
         if request.values.get("origin_pwd") == password:
             dbs.update_password(int(current_user.id), request.values.get("new_pwd"))
             return redirect('/')
         else:
             message = "你密码错了"
-            return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"))
+            return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"), name=name)
     else:
         message = "少年你在想什么"
-        return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"))
+        return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"), name=name)
 
 
 # for admin to change notice
 @app.route('/change_notice', methods=['GET', 'POST'])
 def change_notice():
     dbs = DatabaseOperations()
+    userid = int(current_user.id)
+    name = dbs.query_name(int(userid))[0]
     if request.method == 'POST':
         list1=request.values.get("board").split("\r\n")
         dbs.drop_notice()
@@ -288,7 +297,7 @@ def change_notice():
         # string = ""
         # for i in events:
         #     string = string +str(i) +"\r\n"
-        return render_template('homepage/change_notice.html')
+        return render_template('homepage/change_notice.html', name=name)
 
 
 # for normal user+
@@ -339,7 +348,7 @@ def homepage():
         firwin = int(db_sql.query_position_times(userid, 1))
         secwin = int(db_sql.query_position_times(userid, 2))
         thiwin = int(db_sql.query_position_times(userid, 3))
-        forwin = int(db_sql.query_position_times(userid, 3))
+        forwin = int(db_sql.query_position_times(userid, 4))
         firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
         secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
         thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
@@ -384,12 +393,12 @@ def detail_records():
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
         (Amatch.date.desc())
 
-    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
         (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
         (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), Amatch.win == 1).count()
 
-    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
         (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
         (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), MatchRecord.is_mvp == 1).count()
@@ -397,7 +406,7 @@ def detail_records():
     record_num = records.count()
 
     if winning_rate != 0:
-        winning_rate = request.values.get('winning_date')
+        winning_rate = request.values.get('winning_rate')
     else:
         winning_rate = format(win_num / record_num, '.2%')
 
@@ -419,6 +428,8 @@ def detail_records():
 def homepage_a():
     userid = int(current_user.id)
     db_sql = DatabaseOperations()
+    if not int(db_sql.query_authority(int(current_user.id))[0]):
+        return redirect("/authority")
     name = db_sql.query_name(int(userid))[0]
     page = request.values.get('page', 1, type=int)
     # 检索数据库取得公告板信息赋值给event，
@@ -458,7 +469,7 @@ def homepage_a():
         firwin = int(db_sql.query_position_times(userid, 1))
         secwin = int(db_sql.query_position_times(userid, 2))
         thiwin = int(db_sql.query_position_times(userid, 3))
-        forwin = int(db_sql.query_position_times(userid, 3))
+        forwin = int(db_sql.query_position_times(userid, 4))
         firrate = str(firwin * 100 / (firwin + secwin + thiwin + forwin))
         secrate = str(secwin * 100 / (firwin + secwin + thiwin + forwin))
         thirate = str(thiwin * 100 / (firwin + secwin + thiwin + forwin))
@@ -516,7 +527,7 @@ def detail_records_admin():
     record_num = records.count()
 
     if winning_rate != 0:
-        winning_rate = request.values.get('winning_date')
+        winning_rate = request.values.get('winning_rate')
     else:
         winning_rate = format(win_num / record_num, '.2%')
 
@@ -525,7 +536,7 @@ def detail_records_admin():
     else:
         mvp_rate = format(mvp_num / record_num, '.2%')
 
-    pagination = records.paginate(page=page, per_page=1, error_out=False)
+    pagination = records.paginate(page=page, per_page=5, error_out=False)
     results = pagination.items
 
     return render_template('homepage/detail_records_admin.html', pagination=pagination, results=results,
@@ -575,7 +586,8 @@ def upload(aid):
         new_file = FileContents(file_id=exist_id, doc_name=file.filename, data=file.read())
         db.session.add(new_file)
         db.session.commit()
-        return 'Saved ' + file.filename + ' to the database!'
+        assignment_num = str(aid)
+        return redirect('/assignment_detail/' + assignment_num)
     else:
         new_file = FileContents(file_id=file_id, doc_name=file.filename, data=file.read())
         db.session.add(new_file)
@@ -585,8 +597,9 @@ def upload(aid):
         new_submission = Submission(file_id=file_id, a_id=aid)
         db.session.add(new_submission)
         db.session.commit()
-
-        return 'Saved ' + file.filename + ' to the database!'
+        assignment_num = str(aid)
+        return redirect('/assignment_detail/' + assignment_num)
+        # return 'Saved ' + file.filename + ' to the database!'
 
 
 # here for page of admin
@@ -702,13 +715,18 @@ def attendance_del():
 def grading():
     # 数据库判断权限
     # 根据创建者id搜索作业然后进行打分的项目
-    message = int(current_user.id)
-    dbs = DatabaseOperations()
-    assignments = dbs.query_assignment_creater(int(current_user.id))
+    # message = int(current_user.id)
+    # dbs = DatabaseOperations()
+    # assignments = dbs.query_assignment_creater(int(current_user.id))
+    page = request.values.get('page', 1, type=int)
+    udt_id = str(current_user.id)
+    pagination = db.session.query(Assignment).filter(Assignment.create_id.like('%' + udt_id + '%')).paginate(page=page, per_page=3, error_out=False)
 
+    assignments = pagination.items
     # a = (("今天过大年", "2019-10-31", "反正随便写写就好了说的跟真的有人喜欢似的", 1),
     #      ("期末考试啦啦啦", "2019-11-31", "你一布置我就写岂不是显得我很没面子", 2))
-    return render_template('grading/grading.html', assignments=assignments, message=message)
+    # return render_template('grading/grading.html', assignments=assignments, message=message)
+    return render_template('grading/grading.html', assignments=assignments, pagination=pagination, udt_id=udt_id)
 
 
 @app.route('/grading_detail/<int:aid>')
@@ -717,7 +735,7 @@ def grading_detail(aid):
     assignment = dbs.query_assignment_information(aid)
     number = dbs.query_assignment_number(aid)
     homeworks = dbs.query_homework_information(aid)
-    return render_template('./grading/grading_detail.html',assignment=assignment, number=number,homeworks=homeworks)
+    return render_template('./grading/grading_detail.html', assignment=assignment, number=number, homeworks=homeworks)
 
 
 @app.route('/download/<int:fid>')
@@ -900,7 +918,6 @@ def match_del(mid):
         matchs = dbs.query_match_del(matchDate)
         return render_template('match/match_del.html',matchs = matchs)
 
-
     return render_template('match/match_del.html')
 
 
@@ -948,7 +965,7 @@ def information_a(user_id):
     # 检索数据库取得公告板信息赋值给event，
     # 从数据库中调record
     # 数据库拿到其他信息
-    records = db.query_match_info(int(user_id))
+    records = dbs.query_match_info(int(user_id))
     try:
         firwin = int(dbs.query_position_times(user_id, 1))
         secwin = int(dbs.query_position_times(user_id, 2))

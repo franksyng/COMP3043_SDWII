@@ -152,7 +152,7 @@ class DatabaseOperations():
         """Transfer Python datetime object to string, then do query."""
         cursor = self.__db.cursor()
         try:
-            sql = "select title,detail,dueDate,dueTime from assignment where a_id = %d" % a_id
+            sql = "select title, detail, dueDate, dueTime from assignment where a_id = %d" % a_id
             cursor.execute(sql)
             results = cursor.fetchall()[0]
             return results
@@ -187,7 +187,7 @@ class DatabaseOperations():
         try:
             sql = "INSERT INTO assignment" \
                   "(a_date, title, detail, create_id, dueDate, dueTime) " \
-                  "VALUES ('2019-10-10','%s','%s',%d,'%s','%s')" % (title,detail,user_id,dueDate,dueTime)
+                  "VALUES ('2019-5-20','%s','%s',%d,'%s','%s')" % (title,detail,user_id,dueDate,dueTime)
             cursor.execute(sql)
             self.__db.commit()
             return

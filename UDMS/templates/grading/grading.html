@@ -64,23 +64,51 @@
             </nav>
         </div>
     </div>
-    {% for i in assignments %}
+    {#    {% for i in assignments %}#}
+    {#        <div class="row">#}
+    {#            <div class="col-12">#}
+    {#                <div class="card">#}
+    {#                    <h5 class="card-header">{{ i[0] }}#}
+    {#                        <span class="badge badge-info">Release {{ i[1] }}</span>#}
+    {#                    </h5>#}
+    {#                    <div class="card-body">#}
+    {#                        <p class="card-text">{{ i[2] }}</p>#}
+    {#                        <a href="/grading_detail/{{ i[3] }}" class="btn btn-primary">Grade</a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <br/>#}
+    {#    {% endfor %}#}
+    {% for assignment in assignments %}
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <h5 class="card-header">{{ i[0] }}
-                        <span class="badge badge-info">Release {{ i[1] }}</span>
+                    <h5 class="card-header">{{ assignment.title }}
+                        <span class="badge badge-info">Release 2019-5-20</span>
                     </h5>
                     <div class="card-body">
-                        <p class="card-text">{{ i[2] }}</p>
-                        <a href="/grading_detail/{{ i[3] }}" class="btn btn-primary">Grade</a>
+                        <p class="card-text">{{ assignment.detail }}</p>
+                        <a href="/grading_detail/{{ assignment.a_id }}" class="btn btn-primary">Grade</a>
                     </div>
                 </div>
             </div>
         </div>
         <br/>
     {% endfor %}
+    {% import "grading/_macros.html" as macros %}
+    {%if pagination%}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, 'grading') }}
+        </div>
+    {% endif %}
 </div>
+
+<!-- Invisible form to submit the variables -->
+<form method="get" action="/grading" id="form" style="display:none">
+    <input name="udt_id" value="{{ udt_id }}">
+    <input name="page" id="next_page">
+</form>
 
 <!-- Footer -->
 <footer class="footer bg-dark py-3">
@@ -101,5 +129,14 @@
 <script src="static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+<script>
+    //To get the value of next page together with the search criteria and submit them
+    $(document).ready(function(){
+        $('.pages').click(function(){
+            $('#next_page').val($(this).attr('next-page'));
+            $('#form').submit();
+        });
+    });
+</script>
 </body>
 </html>
