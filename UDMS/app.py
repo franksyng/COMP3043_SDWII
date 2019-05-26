@@ -514,12 +514,12 @@ def detail_records_admin():
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
         (Amatch.date.desc())
 
-    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
         (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
         (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), Amatch.win == 1).count()
 
-    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
+    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
         (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
         (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), MatchRecord.is_mvp == 1).count()
