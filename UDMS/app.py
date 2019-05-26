@@ -23,16 +23,65 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 db = SQLAlchemy(app)
 
 
-class UserGroup(db.Model):
-    __tablename__ = 'user_group'
-    group_id = db.Column(db.Integer, primary_key=True)
-    group_name = db.Column(db.String(15))
+class Amatch(db.Model):
+    __tablename__ = 'amatch'
+    match_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    match_name = db.Column(db.String(30))
+    date = db.Column(db.Date)
+    win = db.Column(db.Integer)
+    side = db.Column(db.Integer)
+    opponent = db.Column(db.String(30))
 
 
-# class NoticeBoard(db.Model):
-#     __tablename__ = 'notice'
-#     notice_id = db.Column(db.Integer, primary_key=True)
-#     text = db.Column(db.String(255))
+class Assignment(db.Model):
+    __tablename__ = 'assignment'
+    a_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    a_date = db.Column(db.DateTime)
+    title = db.Column(db.String(30))
+    detail = db.Column(db.Text)
+    dueDate = db.Column(db.Date)
+    dueTime = db.Column(db.Time)
+
+
+class Attendance(db.Model):
+    __tablename__ = 'attend'
+    id = db.Column(db.Integer)
+    attend_id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    m_id = db.Column(db.Integer)
+
+
+class AttendanceRecord(db.Model):
+    __tablename__ = 'attendance_record'
+    attend_id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    status = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime)
+
+
+# A member belongs to a user group
+class PermissionGroup(db.Model):
+    __tablename__ = 'belong_to'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    group_id = db.Column(db.Integer)
+
+
+class Creator(db.Model):
+    __tablename__ = 'creator'
+    a_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer)
+
+
+class FileContents(db.Model):
+    __tablename__ = 'file_contents'
+    file_id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    doc_name = db.Column(db.String(300))
+    data = db.Column(db.LargeBinary)
+
+
+class HasMatch(db.Model):
+    __tablename__ = 'has'
+    id = db.Column(db.Integer, primary_key=True)
+    r_id = db.Column(db.Integer, primary_key=True)
+    match_id = db.Column(db.Integer)
 
 
 # Entity to record meeting information
@@ -40,63 +89,6 @@ class MeetingInfo(db.Model):
     __tablename__ = 'meeting'
     m_id = db.Column(db.Integer, primary_key=True)
     theme = db.Column(db.String(20))
-    meeting_date = db.Column(db.DateTime)
-
-
-# A relationship between attendance and meeting
-class AttendanceOfMeeting(db.Model):
-    __tablename__ = 'comes_from'
-    a_id = db.Column(db.Integer, primary_key=True)
-    m_id = db.Column(db.Integer)
-
-
-# A member belongs to a user group
-class PermissionGroup(db.Model):
-    __tablename__ = 'belong_to'
-    id = db.Column(db.Integer, primary_key=True)
-    group_id = db.Column(db.Integer)
-
-
-class Assignment(db.Model):
-    __tablename__ = 'assignment'
-    a_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30))
-    a_date = db.Column(db.DateTime)
-    detail = db.Column(db.String(300))
-    create_id = db.Column(db.Integer)
-    dueDate = db.Column(db.Date)
-    dueTime = db.Column(db.Time)
-
-
-class Amatch(db.Model):
-    __tablename__ = 'amatch'
-    match_id = db.Column(db.Integer, primary_key=True)
-    match_name = db.Column(db.Integer)
-    date = db.Column(db.DateTime)
-    win = db.Column(db.Integer)
-    side = db.Column(db.Integer)
-    opponent = db.Column(db.String(30))
-
-
-class TakePart(db.Model):
-    __tablename__ = 'take_part'
-    match_id = db.Column(db.Integer, primary_key=True)
-    r_id = db.Column(db.Integer, primary_key=True)
-
-
-class MatchRecord(db.Model):
-    __tablename__ = 'record'
-    r_id = db.Column(db.Integer, primary_key=True)
-    position = db.Column(db.Integer)
-    is_mvp = db.Column(db.Integer)
-
-
-class PersonalInfo(db.Model):
-    __tablename__ = 'personal_information'
-    info_id = db.Column(db.Integer, primary_key=True)
-    grade = db.Column(db.Float(.2))
-    major = db.Column(db.String(20))
-    last_name = db.Column(db.String(20))
 
 
 class Own(db.Model):
@@ -105,10 +97,32 @@ class Own(db.Model):
     info_id = db.Column(db.Integer)
 
 
-class HasMatch(db.Model):
-    __tablename__ = 'has'
+class PersonalInfo(db.Model):
+    __tablename__ = 'personal_information'
+    info_id = db.Column(db.Integer, primary_key=True)
+    grade = db.Column(db.String(5))
+    major = db.Column(db.String(20))
+    last_name = db.Column(db.String(20))
+
+
+class MatchRecord(db.Model):
+    __tablename__ = 'record'
+    r_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    position = db.Column(db.Integer)
+    is_mvp = db.Column(db.Integer)
+
+
+class Submission(db.Model):
+    __tablename__ = 'submission'
+    a_id = db.Column(db.Integer, primary_key=True)
+    file_id = db.Column(db.BigInteger, primary_key=True)
+
+
+class Submit(db.Model):
+    __tablename__ = 'submit'
     id = db.Column(db.Integer, primary_key=True)
-    r_id = db.Column(db.Integer, primary_key=True)
+    file_id = db.Column(db.BigInteger, primary_key=True)
+    file_grade = db.Column(db.String(3))
 
 
 class UserTB(db.Model):
@@ -118,37 +132,10 @@ class UserTB(db.Model):
     name = db.Column(db.String(20))
 
 
-class FileContents(db.Model):
-    __tablename__ = 'file_contents'
-    file_id = db.Column(db.Integer, primary_key=True)
-    doc_name = db.Column(db.String(300))
-    data = db.Column(db.LargeBinary)
-
-
-class AttendanceRecord(db.Model):
-    __tablename__ = 'attendance_record'
-    a_id = db.Column(db.BigInteger, primary_key=True)
-    status = db.Column(db.Integer)
-    timestamp = db.Column(db.DateTime())
-
-
-class Attendance(db.Model):
-    __tablename__ = 'attend'
-    id = db.Column(db.Integer)
-    a_id = db.Column(db.BigInteger, primary_key=True)
-
-
-class Submit(db.Model):
-    __tablename__ = 'submit'
-    id = db.Column(db.Integer, primary_key=True)
-    file_id = db.Column(db.BigInteger, primary_key=True)
-    file_grade = db.Column(db.String)
-
-
-class Submission(db.Model):
-    __tablename__ = 'submission'
-    a_id = db.Column(db.Integer)
-    file_id = db.Column(db.BigInteger, primary_key=True)
+class UserGroup(db.Model):
+    __tablename__ = 'user_group'
+    group_id = db.Column(db.Integer, primary_key=True)
+    group_name = db.Column(db.String(15))
 
 
 class User(UserMixin):
@@ -203,7 +190,7 @@ def login():
             user_id = int(form.username.data)
             password = db.query_password(user_id)[0]
         except Exception:
-            message = "你输的连王启正都看不下去了"  # 如果输入不合规范
+            message = "Invalid input"  # 如果输入不合规范
             return render_template('login/login.html', message=message)
         if form.password.data == password:
             # 判断不同职位进入不同网页
@@ -218,10 +205,10 @@ def login():
                 login_user(student_user)
                 return redirect('/homepage')
         else:
-            message = password  # 真正的密码是啥
+            message = "Wrong password"  # 真正的密码是啥
             return render_template('login/login.html', message=message)
     else:
-        message = "真就登录都白给"  # 乱来的
+        message = "Welcome"  # 乱来的
         return render_template('login/login.html', message=message)
 
 
@@ -236,17 +223,17 @@ def change_pwd():
         try:
             password = dbs.query_password(int(current_user.id))[0]
         except Exception:
-            message = "你输的连王启正都看不下去了"  # 如果输入不合规范
+            message = "Invalid format"  # 如果输入不合规范
             return render_template('homepage/change_pwd.html', message=message, name=name)
         # 白给成功允许修改
         if request.values.get("origin_pwd") == password:
             dbs.update_password(int(current_user.id),request.values.get("new_pwd"))
             return redirect('/')
         else:
-            message = "你密码错了"
+            message = "Wrong password"
             return render_template('homepage/change_pwd.html', message=request.values.get("new_pwd"), name=name)
     else:
-        message = "少年你在想什么"
+        message = ""
         return render_template('homepage/change_pwd.html',message =request.values.get("new_pwd"), name=name)
 
 
@@ -264,17 +251,17 @@ def change_pwd_admin():
         try:
             password = dbs.query_password(int(current_user.id))[0]
         except Exception:
-            message = "你输的连王启正都看不下去了"  # 如果输入不合规范
+            message = "Invalid format"  # 如果输入不合规范
             return render_template('homepage/change_pwd_admin.html', message=message, name=name)
         # 白给成功允许修改
         if request.values.get("origin_pwd") == password:
             dbs.update_password(int(current_user.id), request.values.get("new_pwd"))
             return redirect('/')
         else:
-            message = "你密码错了"
+            message = "Wrong password"
             return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"), name=name)
     else:
-        message = "少年你在想什么"
+        message = ""
         return render_template('homepage/change_pwd_admin.html', message=request.values.get("new_pwd"), name=name)
 
 
@@ -335,11 +322,10 @@ def homepage():
         absrate = 0
 
     # Query match record from database and do pagination
-    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
-        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
-        (Amatch.date.desc())
+    records = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join\
+        (HasMatch, and_(Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_\
+        (HasMatch.r_id == MatchRecord.r_id)).join(UserTB, and_(HasMatch.id == UserTB.id)).\
+        filter(UserTB.id.like('%' + str(userid) + '%')).order_by(Amatch.date.desc())
 
     pagination = records.paginate(page=page, per_page=5, error_out=False)
     results = pagination.items
@@ -361,6 +347,7 @@ def homepage():
         skilled = "none"
 
     temp = max(firwin, secwin, thiwin, forwin)
+
     if firwin == temp:
         skilled = "First"
     elif secwin == temp:
@@ -387,20 +374,18 @@ def detail_records():
     winning_rate = 0
     mvp_rate = 0
 
-    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
-        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
-        (Amatch.date.desc())
+    # Query match record from database and do pagination
+    records = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join\
+        (HasMatch, and_(Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_\
+        (HasMatch.r_id == MatchRecord.r_id)).join(UserTB, and_(HasMatch.id == UserTB.id)).\
+        filter(UserTB.id.like('%' + str(userid) + '%')).order_by(Amatch.date.desc())
 
-    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+    win_num = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join(HasMatch, and_\
+        (Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_(HasMatch.r_id == MatchRecord.r_id)).\
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), Amatch.win == 1).count()
 
-    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
+    mvp_num = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join(HasMatch, and_\
+        (Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_(HasMatch.r_id == MatchRecord.r_id)).\
         join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), MatchRecord.is_mvp == 1).count()
 
     record_num = records.count()
@@ -455,16 +440,6 @@ def homepage_a():
         latrate = 0
         absrate = 0
 
-    # Query match record from database and do pagination
-    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
-        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
-        (Amatch.date.desc())
-
-    pagination = records.paginate(page=page, per_page=5, error_out=False)
-    results = pagination.items
-
     try:
         firwin = int(db_sql.query_position_times(userid, 1))
         secwin = int(db_sql.query_position_times(userid, 2))
@@ -493,6 +468,18 @@ def homepage_a():
     else:
         skilled = ""
 
+    # Query match record from database and do pagination
+    records = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join\
+        (HasMatch, and_(Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_\
+        (HasMatch.r_id == MatchRecord.r_id)).join(UserTB, and_(HasMatch.id == UserTB.id)).\
+        filter(UserTB.id.like('%' + str(userid) + '%')).order_by(Amatch.date.desc())
+
+    pagination = records.paginate(page=page, per_page=5, error_out=False)
+    results = pagination.items
+
+
+
+
     return render_template('homepage/homepage_admin.html', name=name, events=events, results=results,
                            pre=pre, exc=exc, lat=lat, abs=abs, prerate=prerate, pagination=pagination,
                            excrate=excrate, latrate=latrate, absrate=absrate, records=records, member_id=userid,
@@ -508,21 +495,21 @@ def detail_records_admin():
     winning_rate = 0
     mvp_rate = 0
 
-    records = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
-        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%')).order_by\
-        (Amatch.date.desc())
+    # Query match record from database and do pagination
+    records = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join \
+        (HasMatch, and_(Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_ \
+        (HasMatch.r_id == MatchRecord.r_id)).join(UserTB, and_(HasMatch.id == UserTB.id)). \
+        filter(UserTB.id.like('%' + str(userid) + '%')).order_by(Amatch.date.desc())
 
-    win_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
-        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), Amatch.win == 1).count()
+    win_num = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join(HasMatch, and_ \
+        (Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_(HasMatch.r_id == MatchRecord.r_id)). \
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'),
+                                                            Amatch.win == 1).count()
 
-    mvp_num = db.session.query(Amatch, TakePart, MatchRecord, HasMatch, UserTB).join\
-        (TakePart, and_(Amatch.match_id == TakePart.match_id)).join(MatchRecord, and_\
-        (TakePart.r_id == MatchRecord.r_id)).join(HasMatch, and_(MatchRecord.r_id == HasMatch.r_id)).\
-        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'), MatchRecord.is_mvp == 1).count()
+    mvp_num = db.session.query(Amatch, HasMatch, MatchRecord, UserTB).join(HasMatch, and_ \
+        (Amatch.match_id == HasMatch.match_id)).join(MatchRecord, and_(HasMatch.r_id == MatchRecord.r_id)). \
+        join(UserTB, and_(HasMatch.id == UserTB.id)).filter(UserTB.id.like('%' + str(userid) + '%'),
+                                                            MatchRecord.is_mvp == 1).count()
 
     record_num = records.count()
 
@@ -695,6 +682,7 @@ def attendance_search():
     else:
         return render_template('attendance/attendance_search.html')
 
+
 @app.route('/attendance_del', methods=['GET', 'POST'])
 @login_required
 def attendance_del():
@@ -720,7 +708,9 @@ def grading():
     # assignments = dbs.query_assignment_creater(int(current_user.id))
     page = request.values.get('page', 1, type=int)
     udt_id = str(current_user.id)
-    pagination = db.session.query(Assignment).filter(Assignment.create_id.like('%' + udt_id + '%')).paginate(page=page, per_page=3, error_out=False)
+    pagination = db.session.query(Assignment, Creator).join\
+        (Creator, and_(Assignment.a_id == Creator.a_id)).filter\
+        (Creator.id.like('%' + udt_id + '%')).order_by(Assignment.a_date.desc()).paginate(page=page, per_page=3, error_out=False)
 
     assignments = pagination.items
     # a = (("今天过大年", "2019-10-31", "反正随便写写就好了说的跟真的有人喜欢似的", 1),
@@ -729,13 +719,24 @@ def grading():
     return render_template('grading/grading.html', assignments=assignments, pagination=pagination, udt_id=udt_id)
 
 
-@app.route('/grading_detail/<int:aid>')
+@app.route('/grading_detail/<int:aid>', methods=['POST', 'GET'])
 def grading_detail(aid):
     dbs = DatabaseOperations()
     assignment = dbs.query_assignment_information(aid)
     number = dbs.query_assignment_number(aid)
     homeworks = dbs.query_homework_information(aid)
-    return render_template('./grading/grading_detail.html', assignment=assignment, number=number, homeworks=homeworks)
+    aid = aid * 10000000000
+
+    return render_template('./grading/grading_detail.html', a_id=aid, assignment=assignment, number=number, homeworks=homeworks)
+
+
+@app.route('/grading_detail/grade', methods=['POST'])
+def grade_action():
+    db_sql = DatabaseOperations()
+    grade = request.form['grade']
+    file_id = request.form['file_id']
+    db_sql.update_grade(file_id, grade)
+    return jsonify({'grade': grade})
 
 
 @app.route('/download/<int:fid>')

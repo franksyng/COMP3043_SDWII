@@ -82,27 +82,27 @@
                     <th scope="row">Time remaining</th>
                     <td>4 hours 49 mins</td>
                 </tr>
-                <tr>
-                    <th scope="row">Grading Status</th>
-                    <td>
-                        <form class="was-validated">
-                            <div class="row">
-                                <div class="col">
-                        <div class="custom-control custom-checkbox mb-3">
-                            <input type="checkbox" class="custom-control-input" id="customControlValidation1" required>
-                            <label class="custom-control-label" for="customControlValidation1">Mark as all graded</label>
-                            <div class="invalid-feedback">Please mark before submission</div>
-                        </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="col">
-                                        <button class="btn btn-primary" type="submit">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
+{#                <tr>#}
+{#                    <th scope="row">Grading Status</th>#}
+{#                    <td>#}
+{#                        <form class="was-validated">#}
+{#                            <div class="row">#}
+{#                                <div class="col">#}
+{#                        <div class="custom-control custom-checkbox mb-3">#}
+{#                            <input type="checkbox" class="custom-control-input" id="customControlValidation1" required>#}
+{#                            <label class="custom-control-label" for="customControlValidation1">Mark as all graded</label>#}
+{#                            <div class="invalid-feedback">Please mark before submission</div>#}
+{#                        </div>#}
+{#                                </div>#}
+{#                                <div class="col-3">#}
+{#                                    <div class="col">#}
+{#                                        <button class="btn btn-primary" type="submit">Submit</button>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </td>#}
+{#                </tr>#}
                 </tbody>
             </table>
         </div>
@@ -135,17 +135,17 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group mb-3">
-                                <select class="form-control" id="grade001">
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>C</option>
-                                    <option>D</option>
-                                    <option>F</option>
+                                <select class="form-control" name="{{ i[0] }}" id="grade">
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="F">F</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn btn-primary">Update</button>
+                            <button type="button" class="btn btn btn-primary gradeButton" member_id="{{ i[0] }}" file_id="{{ a_id + i[0] }}">Update</button>
                         </div>
                     </div>
                 </td>
@@ -177,5 +177,24 @@
 <script src="../static/bootstrap-4.3.1/site/docs/4.3/assets/js/vendor/jquery-slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="../static/bootstrap-4.3.1/dist/js/bootstrap.min.js"></script>
+<script src="../../static/js/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.gradeButton').on('click', function(){
+            let member_id = $(this).attr('member_id');
+            let file_id = $(this).attr('file_id'),
+            grade = $('select[name="'+ member_id +'"]').val();
+
+            req = $.ajax({
+                url: '/grading_detail/grade',
+                type: 'POST',
+                data: {file_id: file_id, id: member_id, grade: grade},
+                success: function () {
+                    alert('Graded ' + member_id + ' as ' + grade + ' !');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
